@@ -10,8 +10,7 @@ from enterprises.models import Enterprise
 class ExampleTest(TestCase):
 
     def setUp(self):
-        """Función que ejecuta la configuración inicial"""
-
+        super().setUp()
         Enterprise.objects.create(
             name='test 1',
             location='one location'
@@ -28,9 +27,7 @@ class ExampleTest(TestCase):
             }
         """
 
-    def test_get_all_enterprises(self):
-        """Prueba la consulta de obtener todos los establecimientos"""
-
+    def test_get_enterprise(self):
         schema = graphene.Schema(query=Query)
         result = schema.execute(self.query)
         self.assertIsNone(result.errors)

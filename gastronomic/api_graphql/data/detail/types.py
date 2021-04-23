@@ -8,11 +8,6 @@ from api_graphql.connections import TotalCountConnection
 
 
 class DetailNode(DjangoObjectType):
-    """
-    Clase que representa el componente básico que se utiliza
-    para definir la relación entre los campos del esquema
-    y cómo se recuperan los datos.
-    """
 
     class Meta:
         model = Detail

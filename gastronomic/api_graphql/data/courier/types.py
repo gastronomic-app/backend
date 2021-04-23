@@ -8,20 +8,17 @@ from api_graphql.connections import TotalCountConnection
 
 
 class CourierNode(DjangoObjectType):
-    """
-    Clase que representa el componente básico que se utiliza
-    para definir la relación entre los campos del esquema
-    y cómo se recuperan los datos.
-    """
 
     class Meta:
-        model = Courier
+        model = Courier 
         filter_fields = {
-            'email': ['exact', 'icontains', 'istartswith'],
-            'password': ['exact', 'icontains', 'istartswith'],
-            'last_login': ['exact'],
-            'is_active': ['exact', 'icontains', 'istartswith'],
-            'is_staff': ['exact', 'icontains', 'istartswith']
+            'names': ['exact', 'icontains', 'istartswith'],
+            'lastnames': ['exact', 'icontains', 'istartswith'],
+            'location': ['exact', 'icontains', 'istartswith'],
+            'telephone': ['exact', 'icontains', 'istartswith'],
+            'role': ['exact'],
+            'created': ['exact'],
+            'updated': ['exact']
         }
         interfaces = (Node, )
         connection_class = TotalCountConnection

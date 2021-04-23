@@ -8,14 +8,9 @@ from reviews.models import Review
 
 
 class ReviewNode(DjangoObjectType):
-    """
-    Clase que representa el componente básico que se utiliza
-    para definir la relación entre los campos del esquema
-    y cómo se recuperan los datos.
-    """
 
     class Meta:
-        model = Review
+        model = Review 
         filter_fields = {
             'quality_service': ['exact', 'icontains', 'istartswith'],
             'presentation': ['exact', 'icontains', 'istartswith'],
@@ -25,7 +20,7 @@ class ReviewNode(DjangoObjectType):
             'textures': ['exact', 'icontains', 'istartswith'],
             'cooking_point': ['exact', 'icontains', 'istartswith'],
             'comments': ['exact', 'icontains', 'istartswith'],
-            'date': ['exact']
+            'date': ['exact', 'icontains', 'istartswith']
         }
         interfaces = (Node, )
         connection_class = TotalCountConnection

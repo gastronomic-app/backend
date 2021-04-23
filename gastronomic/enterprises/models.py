@@ -1,81 +1,51 @@
-from django.db.models import (
-    Model,
-    CharField,
-    BooleanField,
-    DateTimeField,
-    TextField,
-    OneToOneField,
-    ForeignKey,
-    ManyToManyField,
-    CASCADE
-)
+from django.db import models
+
+from users.models import EstablishmentManager
 
 # Create your models here.
 
 
-class Enterprise(Model):
-    """Clase que representa una Establecimiento"""
+class Enterprise(models.Model):
+    """Clase que representa una Empresa"""
 
-    name = CharField(max_length=45, help_text='nombre')
-    historical_review = TextField(
-        null=True,
-        blank=True,
-        help_text='reseña historica'
-    )
-    location = CharField(max_length=45, help_text='ubicación')
-    business_hours = CharField(
-        max_length=45,
-        null=True,
-        blank=True,
-        help_text='horario de atención'
-    )
-    status = BooleanField(default=True, help_text='estado')
-    created = DateTimeField(auto_now_add=True, help_text='creado')
+    name = models.CharField(max_length=45, help_text='nombre')
+    historical_review = models.TextField(null=True, blank=True, help_text='reseña historica')
+    location = models.CharField(max_length=45, help_text='ubicación')
+    business_hours = models.CharField(max_length=45, null=True, blank=True, help_text='horario de atención')
+    status = models.BooleanField(default=True, help_text='estado')
+    created = models.DateTimeField(auto_now_add=True, help_text='creado')
 
     # Relaciones
-    image = OneToOneField(
-        'products.Image',
-        null=True,
-        blank=True,
-        on_delete=CASCADE,
-        help_text='imagen'
-    )
-    managers = ManyToManyField(
-        'users.Manager',
-        through='Management',
-        related_name='enterprises',
-        help_text='administradores de establecimiento'
-    )
+    image = models.OneToOneField('products.Image', null=True, blank=True, on_delete=models.CASCADE, help_text='imagen')
 
     def __str__(self) -> str:
         """
         Función que representa al objeto
         cuando es recuperado
 
+        Retorna:
+            String: representa al objeto
         """
         return self.name
 
 
-class Management(Model):
-    """
-    Clase que representa la Gestión entre
-    Establecimientos y Administradores de Establecimientos
-    """
+class Manager(models.Model):
+    """Clase intermedia entre empresas y administradores de establecimientos"""
 
-    date = DateTimeField(auto_now_add=True, help_text='fecha')
-    status = BooleanField(default=True, help_text='estado')
+    date = models.DateTimeField(auto_now_add=True, help_text='fecha')
+    status = models.BooleanField(default=True, help_text='estado')
 
     # Relaciones
-    enterprise = ForeignKey(
-        Enterprise,
-        related_name='managements',
-        on_delete=CASCADE,
-        help_text='establecimiento'
+    enterprise = models.ForeignKey(
+        'Enterprise',
+        related_name='managers',
+        on_delete=models.CASCADE,
+        help_text='empresa'
     )
-    manager = ForeignKey(
-        'users.Manager',
-        related_name='managements',
-        on_delete=CASCADE,
+    establishment_manager = models.ForeignKey(
+        EstablishmentManager,
+        related_name='managers',
+        on_delete=models.CASCADE,
         help_text='administrador del establecimiento'
     )
 
@@ -83,6 +53,8 @@ class Management(Model):
         """
         Función que representa al objeto
         cuando es recuperado
-        """
 
+        Retorna:
+            String: representa al objeto
+        """
         return self.date.strftime('%Y-%m-%d %H:%M')

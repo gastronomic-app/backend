@@ -8,16 +8,11 @@ from deliveries.models import Delivery
 
 
 class DeliveryNode(DjangoObjectType):
-    """
-    Clase que representa el componente básico que se utiliza
-    para definir la relación entre los campos del esquema
-    y cómo se recuperan los datos.
-    """
 
     class Meta:
-        model = Delivery
+        model = Delivery 
         filter_fields = {
-            'status': ['exact'],
+            'status': ['exact', 'icontains', 'istartswith'],
             'delivery_time': ['exact']
         }
         interfaces = (Node, )

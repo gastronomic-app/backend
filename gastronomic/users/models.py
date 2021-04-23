@@ -1,149 +1,102 @@
 from django.db import models
 from django.conf import settings
-from django.db.models.query import QuerySet
-from profiles.models import UserProfile
+
+from .choices import ROLE_CHOICES
 
 # Create your models here.
 
 
-class ClientManager(models.Manager):
-    """Clase que filtra por Usuario Cliente"""
-
-    def get_queryset(self, *args, **kwargs) -> QuerySet:
-        """
-        Función que retorna usuarios de tipo cliente
-        """
-
-        queryset = super().get_queryset(*args, **kwargs)
-        users = queryset.filter(type=UserProfile.Types.CLIENT)
-
-        return users
-
-
-class Client(UserProfile):
+class User(models.Model):
     """
-    Clase que representa un Usuario Cliente
+    Clase abstracta para
+    Clientes, Mensajeros y
+    Administradores de Establecimientos
     """
-
-    class Meta:
-        proxy = True
-
-    objects = ClientManager()
-
-    def save(self, *args, **kwargs) -> None:
-        """Función que guarda un usuario tipo cliente"""
-
-        if not self.pk:
-            self.type = UserProfile.Types.CLIENT
-
-        return super().save(*args, **kwargs)
-
-
-class ManagerManager(models.Manager):
-    """
-    Clase que filtra por
-    Usuario Administrador del Establecimiento
-    """
-
-    def get_queryset(self, *args, **kwargs) -> QuerySet:
-        """
-        Función que retorna usuarios
-        de tipo administrador del establecimiento
-        """
-
-        queryset = super().get_queryset(*args, **kwargs)
-        users = queryset.filter(type=UserProfile.Types.MANAGER)
-
-        return users
-
-
-class Manager(UserProfile):
-    """
-    Clase que representa un
-    Usuario Administrador del Establecimiento
-    """
-
-    class Meta:
-        proxy = True
-
-    objects = ManagerManager()
-
-    def save(self, *args, **kwargs) -> None:
-        """
-        Función que guarda un usuario
-        tipo administrador del establecimiento
-        """
-
-        if not self.pk:
-            self.type = UserProfile.Types.MANAGER
-
-        return super().save(*args, **kwargs)
-
-
-class CourierManager(models.Manager):
-    """Clase que filtra por Usuario Mensajero"""
-
-    def get_queryset(self, *args, **kwargs) -> QuerySet:
-        """
-        Función que retorna usuarios de tipo mensajero
-        """
-
-        queryset = super().get_queryset(*args, **kwargs)
-        users = queryset.filter(type=UserProfile.Types.COURIER)
-
-        return users
-
-
-class Courier(UserProfile):
-    """
-    Clase que representa un Usuario Mensajero
-    """
-
-    class Meta:
-        proxy = True
-
-    objects = CourierManager()
-
-    def save(self, *args, **kwargs) -> None:
-        """
-        Función que guarda un Usuario Mensajero
-        """
-
-        if not self.pk:
-            self.type = UserProfile.Types.COURIER
-
-        return super().save(*args, **kwargs)
-
-
-class Contact(models.Model):
-    """
-    Clase que representa un Contacto del Usuario
-    """
-
     names = models.CharField(max_length=45, help_text='nombres')
     lastnames = models.CharField(max_length=45, help_text='apellidos')
     location = models.CharField(max_length=45, help_text='ubicación')
     telephone = models.CharField(max_length=15, help_text='telefono')
-    license_plate = models.CharField(
-        max_length=6,
-        null=True,
-        blank=True,
-        help_text='placa'
-    )
+    role = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, help_text='rol en el sistema')
     created = models.DateTimeField(auto_now_add=True, help_text='creado')
     updated = models.DateTimeField(auto_now=True, help_text='actualizado')
 
-    user = models.ForeignKey(
+    class Meta:
+        abstract = True
+
+
+class EstablishmentManager(User):
+    """Clase que representa un Administrador del Establecimiento"""
+
+    # Relaciones
+    user_profile = models.OneToOneField(
         settings.AUTH_USER_MODEL,
-        related_name='contact',
         on_delete=models.CASCADE,
-        help_text='usuario'
+        help_text='perfil de usuario'
+    )
+    enterprises = models.ManyToManyField(
+        'enterprises.Enterprise',
+        through='enterprises.Manager',
+        related_name='establishments_managers',
+        help_text='empresas'
     )
 
     def __str__(self) -> str:
         """
         Función que representa al objeto
         cuando es recuperado
-        """
 
-        return '{} {}'.format(self.names, self.lastnames)
+        Retorna:
+            String: representa al objeto
+        """
+        return self.names
+
+
+class Client(User):
+    """Clase que representa un Cliente"""
+
+    # Relaciones
+    user_profile = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        help_text='perfil de usuario'
+    )
+
+    def __str__(self) -> str:
+        """
+        Función que representa al objeto
+        cuando es recuperado
+
+        Retorna:
+            String: representa al objeto
+        """
+        return self.names
+
+
+class Courier(User):
+    """Clase que representa un Mensajero"""
+
+    license_plate = models.CharField(max_length=45, help_text='placa')
+
+    # Relaciones
+    enterprise = models.ForeignKey(
+        'enterprises.Enterprise',
+        related_name='couriers',
+        on_delete=models.CASCADE,
+        help_text='establecimiento'
+    )
+    user_profile = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        help_text='perfil de usuario'
+    )
+
+
+    def __str__(self) -> str:
+        """
+        Función que representa al objeto
+        cuando es recuperado
+
+        Retorna:
+            String: representa al objeto
+        """
+        return self.names

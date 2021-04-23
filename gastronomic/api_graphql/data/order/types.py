@@ -8,16 +8,11 @@ from orders.models import Order
 
 
 class OrderNode(DjangoObjectType):
-    """
-    Clase que representa el componente básico que se utiliza
-    para definir la relación entre los campos del esquema
-    y cómo se recuperan los datos.
-    """
 
     class Meta:
-        model = Order
+        model = Order 
         filter_fields = {
-            'date': ['exact'],
+            'date': ['exact', 'icontains', 'istartswith'],
             'status': ['exact'],
             'estimated_time': ['exact'],
             'location': ['exact', 'icontains', 'istartswith']

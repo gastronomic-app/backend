@@ -1,37 +1,29 @@
-from django.db.models import (
-    Model,
-    CharField,
-    PositiveBigIntegerField,
-    PositiveSmallIntegerField,
-    TextField,
-    ImageField,
-    ForeignKey,
-    ManyToManyField,
-    CASCADE,
-)
+from django.db import models
 
 from enterprises.models import Enterprise
+from .choices import PRODUCT_CHOICES
 
 # Create your models here.
 
 
-class Product(Model):
+class Product(models.Model):
     """Clase que representa un Producto"""
 
-    name = CharField(max_length=45, help_text='nombre')
-    price = PositiveBigIntegerField(help_text='precio')
-    ingredients = TextField(help_text='ingredientes')
-    preparation = TextField(null=True, blank=True, help_text='preparación')
-    estimated_time = PositiveSmallIntegerField(help_text='tiempo estimado')
+    product_type = models.CharField(max_length=45, choices=PRODUCT_CHOICES, help_text='tipo de producto')
+    name = models.CharField(max_length=45, help_text='nombre')
+    price = models.PositiveBigIntegerField(help_text='precio')
+    ingredients = models.TextField(help_text='ingredientes')
+    preparation = models.TextField(null=True, blank=True, help_text='preparación')
+    estimated_time = models.PositiveSmallIntegerField(help_text='tiempo estimado')
 
     # Relaciones
-    enterprise = ForeignKey(
+    enterprise = models.ForeignKey(
         Enterprise,
         related_name='products',
-        on_delete=CASCADE,
-        help_text='establecimiento'
+        on_delete=models.CASCADE,
+        help_text='empresa'
     )
-    accompaniments = ManyToManyField(
+    accompaniments = models.ManyToManyField(
         'self',
         blank=True,
         related_name='products',
@@ -42,21 +34,23 @@ class Product(Model):
         """
         Función que representa al objeto
         cuando es recuperado
-        """
 
+        Retorna:
+            String: representa al objeto
+        """
         return self.name
 
 
-class Image(Model):
+class Image(models.Model):
     """Clase que representa una Imagen"""
 
-    url = ImageField(upload_to='uploads/images')
+    url = models.ImageField(upload_to='uploads/images')
 
     # Relaciones
-    product = ForeignKey(
+    product = models.ForeignKey(
         'Product',
         related_name='images',
-        on_delete=CASCADE,
+        on_delete=models.CASCADE,
         help_text='producto'
     )
 
@@ -64,6 +58,8 @@ class Image(Model):
         """
         Función que representa al objeto
         cuando es recuperado
-        """
 
+        Retorna:
+            String: representa al objeto
+        """
         return self.url.name

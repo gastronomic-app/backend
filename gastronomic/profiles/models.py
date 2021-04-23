@@ -1,12 +1,5 @@
-from django.db.models import (
-    TextChoices,
-    EmailField,
-    CharField,
-    BooleanField,
-    ForeignKey,
-    CASCADE
-)
-from django.contrib.auth.models import AbstractBaseUser, User
+from django.db import models
+from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
 
@@ -14,11 +7,10 @@ from django.contrib.auth.models import BaseUserManager
 
 
 class UserProfileManager(BaseUserManager):
-    """Administrador para perfiles de Usuario"""
+    """Administrador para perfiles de usuario"""
 
-    def create_user(self, email: str, password: str) -> User:
+    def create_user(self, email: str, password: str):
         """Crea un nuevo usuario"""
-
         if not email:
             raise ValueError('User must have an email address')
 
@@ -30,9 +22,8 @@ class UserProfileManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, email: str, password: str) -> User:
+    def create_superuser(self, email: str, password: str):
         """Crea un nuevo superusuario"""
-
         user = self.create_user(email, password)
         user.is_superuser = True
         user.is_staff = True
@@ -42,48 +33,28 @@ class UserProfileManager(BaseUserManager):
 
 
 class UserProfile(AbstractBaseUser, PermissionsMixin):
-    """Clase que representa a los Usuarios en el sistema"""
+    """Clase que representa los usuarios en el sistema"""
 
-    class Types(TextChoices):
-        CLIENT = "CLIENT", "Client"
-        MANAGER = "MANAGER", "Manager"
-        COURIER = "COURIER", "Courier"
-
-    email = EmailField(max_length=45, unique=True)
-    type = CharField(
-        max_length=7,
-        choices=Types.choices,
-        null=True,
-        blank=True,
-        help_text='tipo de usuario'
-    )
-    is_active = BooleanField(
-        default=True,
-        help_text='usuario activo'
-    )
-    is_staff = BooleanField(
-        default=False,
-        help_text='personal de administrador de Django'
-    )
+    email = models.EmailField(max_length=255, unique=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
     objects = UserProfileManager()
 
     USERNAME_FIELD = 'email'
+    # REQUIRED_FIELDS = ['email']
 
-    # Relaciones
-    enterprise = ForeignKey(
-        'enterprises.Enterprise',
-        related_name='couriers',
-        on_delete=CASCADE,
-        null=True,
-        blank=True,
-        help_text='establecimiento'
-    )
+    def get_full_name(self) -> str:
+        """Retrieve full name of user"""
+
+        return self.email
+
+    def get_short_name(self) -> str:
+        """Retrieve short name of user"""
+
+        return self.email
 
     def __str__(self) -> str:
-        """
-        Función que representa al objeto
-        cuando es recuperado
-        """
+        """Return string representation of our user"""
 
         return self.email
