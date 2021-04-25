@@ -4,23 +4,37 @@ from graphene.types.scalars import String
 from graphene.types.scalars import Boolean
 from graphene.types.datetime import DateTime
 
+# Create your inputs types here.
+
+
 class CreateContactInput(InputObjectType):
+    """
+    Clase que encapsula los datos necesarios
+    para la creación de contacto
+    """
+
     names = String(required=True)
     lastnames = String(required=True)
-    location = String(Required=True)
-    telephone = String(Required=True)
+    location = String(required=True)
+    telephone = String(required=True)
     license_plate = String()
-    created = DateTime(Required=True)
-    updated = DateTime(Required=True)
-    user_id = ID(Required=True)
+
+    # Relaciones
+    user_id = ID(required=True)
+
 
 class UpdateContactInput(InputObjectType):
-    id=ID(Required=True)
+    """
+    Clase que encapsula los datos necesarios
+    para la actualización de contacto
+    """
+
+    id = ID(required=True)
     names = String()
     lastnames = String()
     location = String()
     telephone = String()
     license_plate = String()
-    created = DateTime()
-    updated = DateTime()
+
+    # Relaciones
     user_id = ID()
