@@ -17,7 +17,6 @@ class CreateContactInput(InputObjectType):
     lastnames = String(required=True)
     location = String(required=True)
     telephone = String(required=True)
-    license_plate = String()
 
     # Relaciones
     user_id = ID(required=True)
@@ -34,7 +33,6 @@ class UpdateContactInput(InputObjectType):
     lastnames = String()
     location = String()
     telephone = String()
-    license_plate = String()
 
     # Relaciones
     user_id = ID()
