@@ -23,6 +23,5 @@ class UpdateClientInput(InputObjectType):
     """
     
     id = ID(required=True)
-    email = String()
     password = String()
     is_active = Boolean()
