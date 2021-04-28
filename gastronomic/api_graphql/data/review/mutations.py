@@ -21,7 +21,6 @@ class CreateReview(Mutation):
         input = CreateReviewInput(required=True)
 
     def mutate(self, info, input):
-        import pdb; pdb.set_trace()
         input = delete_attributes_none(**vars(input))
         input = transform_global_ids(**input) #Transformacion de Ids
         review = Review.objects.create(**input)
