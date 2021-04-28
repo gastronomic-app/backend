@@ -21,7 +21,9 @@ class CreateReview(Mutation):
         input = CreateReviewInput(required=True)
 
     def mutate(self, info, input):
+        import pdb; pdb.set_trace()
         input = delete_attributes_none(**vars(input))
+        input = transform_global_ids(**input) #Transformacion de Ids
         review = Review.objects.create(**input)
 
         return CreateReview(review=review)
@@ -42,21 +44,3 @@ class UpdateReview(Mutation):
         review = Review.objects.get(pk=input.get('id'))
 
         return UpdateReview(review=review)
-
-
-class DeleteReview(Mutation):
-    # Clase para eliminar un pedido
-    review = Field(ReviewNode)
-
-    class Arguments:
-        input = ID(required=True)
-
-    def mutate(self, info, input):
-        input = from_global_id(input)[1]
-        try:
-            review = Review.objects.get(pk=input)
-            Review.objects.filter(pk=input).delete()
-        except Review.DoesNotExist:
-            raise GraphQLError('Review does not delete')
-
-        return CreateReview(review=review)

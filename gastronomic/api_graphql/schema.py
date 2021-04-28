@@ -42,8 +42,7 @@ from .data.order.mutations import(
 )
 from .data.review.mutations import(
     CreateReview,
-    UpdateReview,
-    DeleteReview
+    UpdateReview
 )
 
 # Schema definition
@@ -104,4 +103,3 @@ class Mutation(ObjectType):
 
     create_review = CreateReview.Field()
     update_review = UpdateReview.Field()
-    delete_review = DeleteReview.Field()
