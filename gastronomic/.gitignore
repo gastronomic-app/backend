@@ -165,4 +165,8 @@ migrations/
 # VS Code
 .vscode
 
+#uploads images
+.uploads
+uploads/
+
 # End of https://www.toptal.com/developers/gitignore/api/django

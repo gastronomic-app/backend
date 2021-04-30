@@ -15,6 +15,7 @@ from .data.manager.types import ManagerNode
 from .data.delivery.types import DeliveryNode
 from .data.enterprise.types import EnterpriseNode
 from .data.management.types import ManagementNode
+from .data.image.types import ImageNode
 from .data.enterprise.mutations import (
     CreateEnterprise,
     UpdateEnterprise,
@@ -28,7 +29,16 @@ from .data.contact.mutations import (
     CreateContact,
     UpdateContact
 )
-
+from .data.product.mutations import (
+    CreateProduct,
+    UpdateProduct,
+    DeleteProduct
+)
+from .data.image.mutations import (
+    CreateImage,
+    UpdateImage,
+    DeleteImage
+)
 
 # Schema definition
 
@@ -47,7 +57,8 @@ class Query(ObjectType):
     detail = Node.Field(DetailNode)
     user = Node.Field(UserNode)
     management = Node.Field(ManagementNode)
-    payment = Node.Field(PaymentNode) 
+    payment = Node.Field(PaymentNode)
+    image = Node.Field(ImageNode)
     
     all_deliveries = DjangoFilterConnectionField(DeliveryNode)
     all_couriers = DjangoFilterConnectionField(CourierNode)
@@ -61,6 +72,7 @@ class Query(ObjectType):
     all_users = DjangoFilterConnectionField(UserNode)
     all_management = DjangoFilterConnectionField(ManagementNode)
     all_payments = DjangoFilterConnectionField(PaymentNode) 
+    all_images = DjangoFilterConnectionField(ImageNode)
 
 
 class Mutation(ObjectType):
@@ -75,4 +87,11 @@ class Mutation(ObjectType):
 
     create_contact = CreateContact.Field()
     update_contact = UpdateContact.Field()
-    
+
+    create_product = CreateProduct.Field()
+    update_product = UpdateProduct.Field()
+    delete_product = DeleteProduct.Field()
+
+    create_image = CreateImage.Field()
+    update_image = UpdateImage.Field()
+    delete_image = DeleteImage.Field()
