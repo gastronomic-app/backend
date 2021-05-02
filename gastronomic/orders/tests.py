@@ -43,8 +43,17 @@ class OrderTest(TestCase):
             client_id=client.pk
         )
 
-    def test_quantity_negative(self) -> None: #funcion para validar que no se ingrese un valor negativo
-        whit self.assertRaises(IntegrityError):
+        Detail.objects.create(
+            quantity=-40,
+
+            # Relaciones
+            order_id=order.pk,
+            product_id=product.pk
+        )
+
+
+"""  def test_quantity_negative(self) -> None: #funcion para validar que no se ingrese un valor negativo
+        with self.assertRaises(IntegrityError):
             Detail.objects.create(
                 quantity=-40,
 
@@ -52,7 +61,9 @@ class OrderTest(TestCase):
                 order_id=order.pk,
                 product_id=product.pk
             )
+"""
 
-    def test_status(self) -> None:
-        detail = Detail.objects.get(quantity=40)
-        self.assertEquals(detail.quantity, 40)
+
+def test_status(self) -> None:
+    detail = Detail.objects.get(quantity=40)
+    self.assertEquals(detail.quantity, 40)
