@@ -10,7 +10,7 @@ from graphene.types.scalars import Boolean
 class CreateOrderInput(InputObjectType):
     # Clase que encapsula los datos necesarios para la creación de Pedido
 
-    estimated_time = String(required=True)
+    estimated_time = Int(required=True)
     location = String(required=True)
 
     # Relaciones
