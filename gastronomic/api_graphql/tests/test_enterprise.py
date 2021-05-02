@@ -1,7 +1,7 @@
 import graphene
 from django.test import TestCase
 
-from .schema import Query
+from api_graphql.schema import Query
 from enterprises.models import Enterprise
 
 # Create your tests here.

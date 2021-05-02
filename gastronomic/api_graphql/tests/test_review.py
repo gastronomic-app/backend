@@ -1,22 +1,22 @@
+import graphene
 from django.test import TestCase
 
-from .models import Review
-from enterprises.models import Enterprise
+from api_graphql.schema import Query
 from users.models import Client
-from products.models import Product
 from orders.models import Order
-
-# Create your tests here.
+from reviews.models import Review
+from products.models import Product
+from enterprises.models import Enterprise
 
 
 class ReviewTest(TestCase):
+    """Funcion que ejecuta la configuracion for ReviewTest"""
 
-    def setUp(self) -> None:
-        "Funcion que ejecuta la configuración inicial"
+    def setUp(self):
 
         enterprise = Enterprise.objects.create(
             name='unicauca',
-            location='Popayan',
+            location='Popayan'
         )
 
         client = Client.objects.create(
@@ -31,6 +31,7 @@ class ReviewTest(TestCase):
             preparation="Describa aqui",
             estimated_time=4,
 
+            # Relaciones
             enterprise_id=enterprise.pk
         )
 
@@ -52,11 +53,39 @@ class ReviewTest(TestCase):
             cooking_point='bueno',
             comments='Este es un comentario por defecto',
 
+            # Relaciones
             order_id=order.pk
         )
 
-    def test_textures(self) -> None:
-        "Prueba el atributo estado de la Review"
+        self.query = """
+			query{
+				allReviews{
+					edges{
+						node{
+                            qualityService
+						}
+					}
+				}
+			}
+		"""
 
-        review = Review.objects.get(quality_service='bueno')
-        self.assertEquals(review.textures, 'regular')
+    def test_get_all_reviews(self):
+        """Prueba la consulta de obtener todos los reviews"""
+
+        schema = graphene.Schema(query=Query)
+        result = schema.execute(self.query)
+        self.assertIsNone(result.errors)
+        self.assertDictEqual(
+            {
+                "allReviews": {
+                    "edges": [
+                        {
+                            "node": {
+                                "qualityService": "BUENO"
+                            }
+                        }
+                    ]
+                }
+            },
+            result.data
+        )

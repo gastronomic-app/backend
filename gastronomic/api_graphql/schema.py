@@ -15,6 +15,7 @@ from .data.manager.types import ManagerNode
 from .data.delivery.types import DeliveryNode
 from .data.enterprise.types import EnterpriseNode
 from .data.management.types import ManagementNode
+from .data.review.types import ReviewNode
 from .data.enterprise.mutations import (
     CreateEnterprise,
     UpdateEnterprise,
@@ -29,6 +30,20 @@ from .data.contact.mutations import (
     UpdateContact
 )
 
+from .data.detail.mutations import (
+    CreateDetail,
+    UpdateDetail,
+    DeleteDetail
+)
+from .data.order.mutations import(
+    CreateOrder,
+    UpdateOrder,
+    DeleteOrder
+)
+from .data.review.mutations import(
+    CreateReview,
+    UpdateReview
+)
 
 # Schema definition
 
@@ -47,7 +62,8 @@ class Query(ObjectType):
     detail = Node.Field(DetailNode)
     user = Node.Field(UserNode)
     management = Node.Field(ManagementNode)
-    payment = Node.Field(PaymentNode) 
+    payment = Node.Field(PaymentNode)
+    review = Node.Field(ReviewNode)  
     
     all_deliveries = DjangoFilterConnectionField(DeliveryNode)
     all_couriers = DjangoFilterConnectionField(CourierNode)
@@ -61,6 +77,7 @@ class Query(ObjectType):
     all_users = DjangoFilterConnectionField(UserNode)
     all_management = DjangoFilterConnectionField(ManagementNode)
     all_payments = DjangoFilterConnectionField(PaymentNode) 
+    all_reviews = DjangoFilterConnectionField(ReviewNode)
 
 
 class Mutation(ObjectType):
@@ -76,3 +93,13 @@ class Mutation(ObjectType):
     create_contact = CreateContact.Field()
     update_contact = UpdateContact.Field()
     
+    create_detail = CreateDetail.Field()
+    update_detail = UpdateDetail.Field()
+    delete_detail = DeleteDetail.Field()
+
+    create_order = CreateOrder.Field()
+    update_order = UpdateOrder.Field()
+    delete_order = DeleteOrder.Field()
+
+    create_review = CreateReview.Field()
+    update_review = UpdateReview.Field()
