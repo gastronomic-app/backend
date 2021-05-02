@@ -24,6 +24,8 @@ class CreateOrder(Mutation):
 
     def mutate(self, info, input):
         input = delete_attributes_none(**vars(input))
+        input = transform_global_ids(**input)
+        
         order = Order.objects.create(**input)
 
         return CreateOrder(order=order)

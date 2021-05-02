@@ -9,7 +9,7 @@ class CreateDetailInput(InputObjectType):
     # Clase que encapsula los datos necesarios
     # para la creación de detalles
 
-    quantity = String(required=True)
+    quantity = Int(required=True)
 
     # Relaciones o foraneas.
     order_id = ID(required=True)

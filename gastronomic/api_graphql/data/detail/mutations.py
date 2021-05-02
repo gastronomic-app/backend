@@ -14,35 +14,40 @@ from api_graphql.utils import delete_attributes_none
 
 
 class CreateDetail(Mutation):
-    #Clase para crear detalles
+    # Clase para crear detalles
     detail = Field(DetailNode)
 
     class Arguments:
         input = CreateDetailInput(required=True)
-    
-    def mutate(self, info, input):
-        input = delete_attributes_none(**vars(input))
-        detail = Detail.objects.create(**input)
-        return CreateDetail(detail=detail)
 
-class UpdateDetail(Mutation):
-    #clase para actualizar detalles
-    detail = Field(DetailNode)
-    
-    class Arguments:
-        input = UpdateDetailInput(required=True)
-    
     def mutate(self, info, input):
         input = delete_attributes_none(**vars(input))
         input = transform_global_ids(**input)
 
-        Detail.objects.filter(pk = input.get('id')).update(**input)
+        detail = Detail.objects.create(**input)
+
+        return CreateDetail(detail=detail)
+
+
+class UpdateDetail(Mutation):
+    # clase para actualizar detalles
+    detail = Field(DetailNode)
+
+    class Arguments:
+        input = UpdateDetailInput(required=True)
+
+    def mutate(self, info, input):
+        input = delete_attributes_none(**vars(input))
+        input = transform_global_ids(**input)
+
+        Detail.objects.filter(pk=input.get('id')).update(**input)
         detail = Detail.objects.get(pk=input.get('id'))
 
         return UpdateDetail(detail=detail)
 
+
 class DeleteDetail(Mutation):
-    #Clase para eliminar detalle
+    # Clase para eliminar detalle
     detail = Field(DetailNode)
 
     class Arguments:
@@ -56,5 +61,5 @@ class DeleteDetail(Mutation):
             Detail.objects.filter(pk=input).delete()
         except Detail.DoesNotExist:
             raise GraphQLError('Detail does not delete')
-        
+
         return CreateDetail(detail=detail)
