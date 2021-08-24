@@ -1,4 +1,4 @@
-# Gastronomic Backend
+# Delivery Food Backend
 
 Aplicación de domicilios gastronómicos para la materia Proyecto 1 de la Universidad del Cauca.
 
@@ -9,7 +9,7 @@ Hoy en día los domicilios de gastronomía se han convertido en una necesidad pa
 ## Tecnologías
 
 - [Django](https://www.djangoproject.com/)
-- [GraphQl](https://graphene-python.org/)
+- [GraphQL](https://graphene-python.org/)
 
 ---
 
