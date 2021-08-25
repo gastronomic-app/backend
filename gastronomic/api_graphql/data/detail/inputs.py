@@ -1,13 +1,14 @@
 
 from graphene.types.scalars import Int
-from graphene.types.scalars import String
 from graphene import InputObjectType
 from graphene.types.scalars import ID
 
 
 class CreateDetailInput(InputObjectType):
-    # Clase que encapsula los datos necesarios
-    # para la creación de detalles
+    """
+    Clase que encapsula los datos necesarios
+    para la creación de detalles
+    """
 
     quantity = Int(required=True)
 
@@ -17,17 +18,13 @@ class CreateDetailInput(InputObjectType):
 
 
 class UpdateDetailInput(InputObjectType):
-    # Clase que encapsula los datos necesarios para
-    # la actualización de establecimientos
+    """
+    Clase que encapsula los datos necesarios para
+    la actualización de establecimientos
+    """
     id = ID(required=True)
     quantity = Int()
 
     # Relaciones o foraneas.
     order_id = ID()
     product_id = ID()
-
-
-class DeleteDetailInput(InputObjectType):
-    # Clase que encapsula los datos necesarios para
-    # la actualización de establecimientos
-    id = ID(required=True)

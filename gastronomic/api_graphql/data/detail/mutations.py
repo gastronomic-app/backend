@@ -8,13 +8,13 @@ from orders.models import Detail
 from api_graphql.data.detail.types import DetailNode
 from api_graphql.data.detail.inputs import CreateDetailInput
 from api_graphql.data.detail.inputs import UpdateDetailInput
-from api_graphql.data.detail.inputs import DeleteDetailInput
 from api_graphql.utils import transform_global_ids
 from api_graphql.utils import delete_attributes_none
 
 
 class CreateDetail(Mutation):
-    # Clase para crear detalles
+    """Clase para crear detalles"""
+
     detail = Field(DetailNode)
 
     class Arguments:
@@ -30,7 +30,8 @@ class CreateDetail(Mutation):
 
 
 class UpdateDetail(Mutation):
-    # clase para actualizar detalles
+    """Clase para actualizar detalles"""
+
     detail = Field(DetailNode)
 
     class Arguments:
@@ -40,14 +41,15 @@ class UpdateDetail(Mutation):
         input = delete_attributes_none(**vars(input))
         input = transform_global_ids(**input)
 
-        Detail.objects.filter(pk=input.get('id')).update(**input)
-        detail = Detail.objects.get(pk=input.get('id'))
+        Detail.objects.filter(pk=input.get("id")).update(**input)
+        detail = Detail.objects.get(pk=input.get("id"))
 
         return UpdateDetail(detail=detail)
 
 
 class DeleteDetail(Mutation):
-    # Clase para eliminar detalle
+    """Clase para eliminar detalle"""
+
     detail = Field(DetailNode)
 
     class Arguments:
@@ -60,6 +62,6 @@ class DeleteDetail(Mutation):
             detail = Detail.objects.get(pk=input)
             Detail.objects.filter(pk=input).delete()
         except Detail.DoesNotExist:
-            raise GraphQLError('Detail does not delete')
+            raise GraphQLError("Detail does not delete")
 
         return CreateDetail(detail=detail)

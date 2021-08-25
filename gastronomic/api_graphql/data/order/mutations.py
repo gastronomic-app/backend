@@ -8,7 +8,6 @@ from orders.models import Order
 from api_graphql.data.order.types import OrderNode
 from api_graphql.data.order.inputs import CreateOrderInput
 from api_graphql.data.order.inputs import UpdateOrderInput
-from api_graphql.data.order.inputs import DeleteOrderInput
 from api_graphql.utils import delete_attributes_none
 from api_graphql.utils import transform_global_ids
 
@@ -16,7 +15,7 @@ from api_graphql.utils import transform_global_ids
 
 
 class CreateOrder(Mutation):
-    # Clase para crear un pedido
+    """Clase para crear un pedido"""
     order = Field(OrderNode)
 
     class Arguments:
@@ -25,14 +24,14 @@ class CreateOrder(Mutation):
     def mutate(self, info, input):
         input = delete_attributes_none(**vars(input))
         input = transform_global_ids(**input)
-        
+
         order = Order.objects.create(**input)
 
         return CreateOrder(order=order)
 
 
 class UpdateOrder(Mutation):
-    # Clase para realizar la actualización de un pedido
+    """Clase para realizar la actualización de un pedido"""
     order = Field(OrderNode)
 
     class Arguments:
@@ -42,14 +41,15 @@ class UpdateOrder(Mutation):
         input = delete_attributes_none(**vars(input))
         input = transform_global_ids(**input)
 
-        Order.objects.filter(pk=input.get('id')).update(**input)
-        order = Order.objects.get(pk=input.get('id'))
+        Order.objects.filter(pk=input.get("id")).update(**input)
+        order = Order.objects.get(pk=input.get("id"))
 
         return UpdateOrder(order=order)
 
 
 class DeleteOrder(Mutation):
-    # Clase para eliminar un pedido
+    """Clase para eliminar un pedido"""
+
     order = Field(OrderNode)
 
     class Arguments:
@@ -61,6 +61,6 @@ class DeleteOrder(Mutation):
             order = Order.objects.get(pk=input)
             Order.objects.filter(pk=input).delete()
         except Order.DoesNotExist:
-            raise GraphQLError('Order does not delete')
+            raise GraphQLError("Order does not delete")
 
         return CreateOrder(order=order)
