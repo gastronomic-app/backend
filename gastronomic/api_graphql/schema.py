@@ -25,6 +25,10 @@ from .data.client.mutations import (
     CreateClient,
     UpdateClient
 )
+from .data.courier.mutations import (
+    CreateCourier,
+    UpdateCourier
+)
 from .data.contact.mutations import (
     CreateContact,
     UpdateContact
@@ -89,6 +93,9 @@ class Mutation(ObjectType):
 
     create_client = CreateClient.Field()
     update_client = UpdateClient.Field()
+
+    create_courier = CreateCourier.Field()
+    update_courier = UpdateCourier.Field()
 
     create_contact = CreateContact.Field()
     update_contact = UpdateContact.Field()
