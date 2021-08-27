@@ -23,6 +23,18 @@ Hoy en día los domicilios de gastronomía se han convertido en una necesidad pa
 
 ---
 
+## Variables de entorno
+
+Después de descargar el proyecto, puede configurar las variables de entorno en su sistema operativo o actualizar el archivo ```settings.py``` por valores fijos.
+
+### Variables a cambiar
+
+```python
+DEBUG = True
+SECRET_KEY = "QOE4i4dMCj"
+```
+---
+
 ## Pasos para ejecutar la aplicación
 
 1. Se recomienda utilizar **Python 3.6** o superior
