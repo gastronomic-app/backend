@@ -24,9 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'https://delivery-food-frontend.herokuapp.com/'
+]
 
 
 # Application definition
@@ -163,3 +167,10 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 CORS_ALLOW_CREDENTIALS = True
+
+
+# Configure Django App for Heroku.
+
+if not os.getenv('DEBUG'):
+    import django_on_heroku
+    django_on_heroku.settings(locals())
