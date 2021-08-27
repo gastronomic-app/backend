@@ -29,7 +29,8 @@ DEBUG = os.getenv('DEBUG')
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'https://delivery-food-frontend.herokuapp.com/'
+    'delivery-food-backend.herokuapp.com',
+    'delivery-food-frontend.herokuapp.com/'
 ]
 
 
@@ -171,6 +172,6 @@ CORS_ALLOW_CREDENTIALS = True
 
 # Configure Django App for Heroku.
 
-if not os.getenv('DEBUG'):
+if os.getenv('ON_HEROKU'):
     import django_on_heroku
     django_on_heroku.settings(locals())
