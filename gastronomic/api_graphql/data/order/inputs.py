@@ -28,7 +28,7 @@ class UpdateOrderInput(InputObjectType):
     id = ID(required=True)
 
     status = String()
-    estimated_time = String()
+    estimated_time = Int()
     location = String()
 
     # Relaciones
