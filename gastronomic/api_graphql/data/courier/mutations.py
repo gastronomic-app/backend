@@ -28,7 +28,7 @@ class CreateCourier(Mutation):
 class UpdateCourier(Mutation):
     """Clase para actualizar mensajero"""
 
-    client = Field(CourierNode)
+    courier = Field(CourierNode)
 
     class Arguments:
         input = UpdateCourierInput(required=True)
@@ -39,6 +39,6 @@ class UpdateCourier(Mutation):
         input = transform_global_ids(**input)
 
         Courier.objects.filter(pk=input.get("id")).update(**input)
-        client = Courier.objects.get(pk=input.get("id"))
+        courier = Courier.objects.get(pk=input.get("id"))
 
-        return UpdateCourier(client=client)
+        return UpdateCourier(courier=courier)

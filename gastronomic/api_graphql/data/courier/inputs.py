@@ -25,3 +25,4 @@ class UpdateCourierInput(InputObjectType):
     id = ID(required=True)
     password = String()
     is_active = Boolean()
+    is_available = Boolean()
