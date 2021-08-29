@@ -1,7 +1,6 @@
 from django.db.models import (
     Model,
     DateTimeField,
-    BooleanField,
     PositiveSmallIntegerField,
     CharField,
     ForeignKey,
@@ -11,6 +10,7 @@ from django.db.models import (
 
 from products.models import Product
 from users.models import Client
+from .choices import STATUS_CHOICES, NEW
 
 # Create your models here.
 
@@ -19,7 +19,7 @@ class Order(Model):
     """"Clase que representa una Orden de Pedido"""
 
     date = DateTimeField(auto_now_add=True, help_text='fecha')
-    status = BooleanField(default=True, help_text='estado')
+    status = CharField(max_length=15, choices=STATUS_CHOICES, default=NEW, help_text='estado')
     estimated_time = PositiveSmallIntegerField(help_text='tiempo estimado')
     location = CharField(max_length=45, help_text='ubicación')
 
