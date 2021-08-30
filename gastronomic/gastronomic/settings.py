@@ -170,6 +170,16 @@ CORS_ORIGIN_WHITELIST = [
 CORS_ALLOW_CREDENTIALS = True
 
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  
+MAILER_EMAIL_BACKEND = EMAIL_BACKEND 
+EMAIL_HOST = os.getenv('EMAIL_HOST')  
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')  
+EMAIL_PORT = 465  
+EMAIL_USE_SSL = True  
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SITE_ID = 1
+
 # Configure Django App for Heroku.
 
 if os.getenv('ON_HEROKU'):
