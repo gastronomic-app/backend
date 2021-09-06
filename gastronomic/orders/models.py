@@ -7,6 +7,8 @@ from django.db.models import (
     ManyToManyField,
     CASCADE
 )
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 from products.models import Product
 from users.models import Client
@@ -68,6 +70,11 @@ class Detail(Model):
         on_delete=CASCADE,
         help_text='order de pedido'
     )
+
+    def clean(self) -> None:
+        if self.quantity == 0:
+            raise ValidationError(_('No se puede guardar 0'))
+        return super().clean()
 
     def __str__(self) -> str:
         """
