@@ -68,6 +68,10 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         default=False,
         help_text='personal de administrador de Django'
     )
+    is_available = BooleanField(
+        default=True,
+        help_text='disponibilidad del mensajero'
+    )
 
     objects = UserProfileManager()
 
