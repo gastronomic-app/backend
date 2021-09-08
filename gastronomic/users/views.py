@@ -18,9 +18,10 @@ from django.contrib.sites.shortcuts import get_current_site
 def signup(self, request):
     user = self
     current_site = get_current_site(request)
+    site = 'localhost:8080'
     email_body = {
         'user': user,
-        'domain': current_site,
+        'domain': site,
         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
         'token': account_activation_token.make_token(user),
     }
@@ -45,7 +46,6 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        print(ip)
         return redirect('http://localhost:8080/login')
     else:
         return redirect('')
@@ -77,6 +77,7 @@ def activateRe(request, uidb64, token):
         uid = force_text(urlsafe_base64_decode(uidb64))
         cad = "UserNode:"+uid
         cad = urlsafe_base64_encode(force_bytes(cad))
+        cad = cad + "=="
         user = UserProfile.objects.get(pk = uid)
     except(TypeError, ValueError, OverflowError, UserProfile.DoesNotExist):
         user = None
@@ -85,3 +86,4 @@ def activateRe(request, uidb64, token):
     
     else:
         return redirect('http://localhost:8080/login')
+

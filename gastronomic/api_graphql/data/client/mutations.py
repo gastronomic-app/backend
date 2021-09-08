@@ -36,7 +36,6 @@ class CreateClient(Mutation):
         if(client.password != 'deliver-food-2021'):
             signup(client, info.context)
         else:
-            
             client = Client.objects.get(email=client.email)
             client.is_active=True
             client.save()
