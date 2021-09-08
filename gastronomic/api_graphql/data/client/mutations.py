@@ -1,8 +1,6 @@
-from api_graphql.data.contact.inputs import UpdateContactInput
 from graphene import Field
 from graphene import Mutation
 from graphene.types.scalars import ID
-from graphql_relay.node.node import from_global_id
 
 from users.models import Client, Contact
 from api_graphql.data.client.types import ClientNode
