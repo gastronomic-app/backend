@@ -26,7 +26,7 @@ class UserProfileManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email)
         user.set_password(password)
-        user.save(using=self._db)     
+        user.save(using=self._db)
         return user
 
     def create_superuser(self, email: str, password: str) -> User:
@@ -61,7 +61,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         help_text='tipo de ingreso del usuario'
     )
     is_active = BooleanField(
-        default=False,
+        default=True,
         help_text='usuario activo'
     )
     is_staff = BooleanField(
