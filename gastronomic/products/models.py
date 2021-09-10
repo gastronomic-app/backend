@@ -7,19 +7,17 @@ from django.db.models import (
     ImageField,
     ForeignKey,
     ManyToManyField,
-    CASCADE
+    CASCADE,
 )
 
 from enterprises.models import Enterprise
-from .choices import PRODUCT_CHOICES
 
 # Create your models here.
 
 
 class Product(Model):
     """Clase que representa un Producto"""
-    
-    product_type = CharField(max_length=45, choices=PRODUCT_CHOICES, help_text='tipo de producto')
+
     name = CharField(max_length=45, help_text='nombre')
     price = PositiveBigIntegerField(help_text='precio')
     ingredients = TextField(help_text='ingredientes')
@@ -52,7 +50,8 @@ class Product(Model):
 class Image(Model):
     """Clase que representa una Imagen"""
 
-    url = ImageField(upload_to='ProductsImages')
+    url = ImageField(upload_to='uploads/images')
+
     # Relaciones
     product = ForeignKey(
         'Product',
@@ -67,4 +66,4 @@ class Image(Model):
         cuando es recuperado
         """
 
-        return self.url.url
+        return self.url.name

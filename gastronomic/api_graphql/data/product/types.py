@@ -17,7 +17,6 @@ class ProductNode(DjangoObjectType):
     class Meta:
         model = Product
         filter_fields = {
-            'product_type': ['exact', 'icontains', 'istartswith'],
             'name': ['exact', 'icontains', 'istartswith'],
             'price': ['exact'],
             'ingredients': ['exact', 'icontains', 'istartswith'],
