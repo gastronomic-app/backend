@@ -25,10 +25,11 @@ class CreateClient(Mutation):
         client = Client(
             email=input.pop('email'),
             password=input.pop('password'),
-            is_alternative = input.pop('is_alternative')
+            is_alternative = input.pop('is_alternative'),
         )
         input['user'] = client
         contact = Contact(**input)
+        client.is_active=False
         client.save()
         contact.save()
         if(client.password != 'deliver-food-2021'):
