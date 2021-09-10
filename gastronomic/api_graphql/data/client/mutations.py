@@ -29,6 +29,7 @@ class CreateClient(Mutation):
         )
         input['user'] = client
         contact = Contact(**input)
+        client.is_active=False
         client.save()
         contact.save()
         if(client.password != 'deliver-food-2021'):
