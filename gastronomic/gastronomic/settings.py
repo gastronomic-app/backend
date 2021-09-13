@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 
+import cloudinary_storage
+
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -21,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = "os.getenv('SECRET_KEY')"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG')
@@ -45,6 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'graphene_django',
     'corsheaders',
+    'cloudinary_storage',    
+    'cloudinary'
 
     'deliveries.apps.DeliveriesConfig',
     'enterprises.apps.EnterprisesConfig',
@@ -60,7 +65,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -184,3 +189,15 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 if os.getenv('ON_HEROKU'):
     import django_on_heroku
     django_on_heroku.settings(locals())
+    
+    
+#Clodinary
+MEDIA_URL = '/Gastronomic/' 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dcbzwrn30',
+    'API_KEY': '417795229289718',
+    'API_SECRET': 'nbABKj1Rgtbzz_BkQxWQ0SDrn_g'
+}
+
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
