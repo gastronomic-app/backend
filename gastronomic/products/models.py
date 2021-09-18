@@ -19,7 +19,7 @@ from .choices import PRODUCT_CHOICES
 class Product(Model):
     """Clase que representa un Producto"""
     
-    product_type = CharField(max_length=45, choices=PRODUCT_CHOICES, help_text='tipo de producto')
+    product_type = CharField(max_length=45, choices=PRODUCT_CHOICES, help_text='tipo de producto', default="")
     name = CharField(max_length=45, help_text='nombre')
     price = PositiveBigIntegerField(help_text='precio')
     ingredients = TextField(help_text='ingredientes')
@@ -52,7 +52,7 @@ class Product(Model):
 class Image(Model):
     """Clase que representa una Imagen"""
 
-    url = ImageField(upload_to='ProductsImages')
+    url = ImageField(upload_to='upload/Images')
     # Relaciones
     product = ForeignKey(
         'Product',
