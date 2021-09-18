@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 
-import cloudinary_storage
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -48,8 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'graphene_django',
     'corsheaders',
-    'cloudinary_storage',    
-    'cloudinary'
+    
 
     'deliveries.apps.DeliveriesConfig',
     'enterprises.apps.EnterprisesConfig',
@@ -58,7 +56,9 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'reviews.apps.ReviewsConfig',
     'users.apps.UsersConfig',
-    'profiles.apps.ProfilesConfig'
+    'profiles.apps.ProfilesConfig',
+    'cloudinary_storage',    
+    'cloudinary'
 ]
 
 MIDDLEWARE = [
@@ -192,11 +192,12 @@ if os.getenv('ON_HEROKU'):
     
     
 #Clodinary
+SECRET_KEY = os.getenv('SECRET_KEY')
 MEDIA_URL = '/Gastronomic/' 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dcbzwrn30',
-    'API_KEY': '417795229289718',
-    'API_SECRET': 'nbABKj1Rgtbzz_BkQxWQ0SDrn_g'
+    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET')
 }
 
 
