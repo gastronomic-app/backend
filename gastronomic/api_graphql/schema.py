@@ -16,6 +16,7 @@ from .data.delivery.types import DeliveryNode
 from .data.enterprise.types import EnterpriseNode
 from .data.management.types import ManagementNode
 from .data.review.types import ReviewNode
+from .data.image.types import ImageNode
 from .data.enterprise.mutations import (
     CreateEnterprise,
     UpdateEnterprise,
@@ -49,6 +50,15 @@ from .data.review.mutations import(
     CreateReview,
     UpdateReview
 )
+from .data.product.mutations import (
+    CreateProduct,
+    UpdateProduct,
+    DeleteProduct
+)
+from .data.image.mutations import (
+    CreateImage,
+    UpdateImage
+)
 
 # Schema definition
 
@@ -69,6 +79,7 @@ class Query(ObjectType):
     management = Node.Field(ManagementNode)
     payment = Node.Field(PaymentNode)
     review = Node.Field(ReviewNode)
+    image = Node.Field(ImageNode)
 
     all_deliveries = DjangoFilterConnectionField(DeliveryNode)
     all_couriers = DjangoFilterConnectionField(CourierNode)
@@ -83,7 +94,7 @@ class Query(ObjectType):
     all_management = DjangoFilterConnectionField(ManagementNode)
     all_payments = DjangoFilterConnectionField(PaymentNode)
     all_reviews = DjangoFilterConnectionField(ReviewNode)
-
+    all_images = DjangoFilterConnectionField(ImageNode)
 
 class Mutation(ObjectType):
     """Endpoint para crear, actualizar y eliminar registros"""
@@ -112,3 +123,11 @@ class Mutation(ObjectType):
 
     create_review = CreateReview.Field()
     update_review = UpdateReview.Field()
+    
+    
+    create_product = CreateProduct.Field()
+    update_product = UpdateProduct.Field()
+    delete_product = DeleteProduct.Field()
+
+    create_image = CreateImage.Field()
+    update_image = UpdateImage.Field()

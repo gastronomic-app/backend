@@ -32,6 +32,9 @@ Después de descargar el proyecto, puede configurar las variables de entorno en 
 ```python
 DEBUG = True
 SECRET_KEY = "QOE4i4dMCj"
+CLOUDINARY_CLOUD_NAME = 'dcbzwrn30'
+CLOUDINARY_API_KEY = '417795229289718'
+CLOUDINARY_API_SECRET = 'nbABKj1Rgtbzz_BkQxWQ0SDrn_g'
 ```
 ---
 
