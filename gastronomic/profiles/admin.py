@@ -8,6 +8,9 @@ from .models import UserProfile
 
 class UserProfileAdmin(admin.ModelAdmin):
     exclude = ("last_login", )
+    list_display=('email','type','is_active')
+    list_filter=('is_active','type',)
+    search_fields=('email',)
     class meta:
         model = UserProfile
 
