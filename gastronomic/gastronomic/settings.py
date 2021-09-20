@@ -31,7 +31,7 @@ DEBUG = os.getenv('DEBUG')
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'https://delivery-food-frontend.herokuapp.com/'
+    'https://delivery-food-frontend.herokuapp.com'
 ]
 
 
