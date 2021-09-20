@@ -31,8 +31,7 @@ DEBUG = os.getenv('DEBUG')
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'delivery-food-backend.herokuapp.com',
-    'delivery-food-frontend.herokuapp.com/'
+    'https://delivery-food-frontend.herokuapp.com/'
 ]
 
 
@@ -47,7 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'graphene_django',
     'corsheaders',
-    
 
     'deliveries.apps.DeliveriesConfig',
     'enterprises.apps.EnterprisesConfig',
@@ -57,7 +55,7 @@ INSTALLED_APPS = [
     'reviews.apps.ReviewsConfig',
     'users.apps.UsersConfig',
     'profiles.apps.ProfilesConfig',
-    'cloudinary_storage',    
+    'cloudinary_storage',
     'cloudinary'
 ]
 
@@ -65,7 +63,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -175,30 +173,30 @@ CORS_ORIGIN_WHITELIST = [
 CORS_ALLOW_CREDENTIALS = True
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  
-MAILER_EMAIL_BACKEND = EMAIL_BACKEND 
-EMAIL_HOST = os.getenv('EMAIL_HOST')  
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')  
-EMAIL_PORT = 465  
-EMAIL_USE_SSL = True  
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+MAILER_EMAIL_BACKEND = EMAIL_BACKEND
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
 # Configure Django App for Heroku.
 
 if os.getenv('ON_HEROKU'):
     import django_on_heroku
     django_on_heroku.settings(locals())
-    
-    
-#Clodinary
-SECRET_KEY = os.getenv('SECRET_KEY')
-MEDIA_URL = '/Gastronomic/' 
+
+# Configure images
+
+MEDIA_URL = '/Gastronomic/'
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
     'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
     'API_SECRET': os.getenv('CLOUDINARY_API_SECRET')
 }
-
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
