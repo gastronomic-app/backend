@@ -49,6 +49,20 @@ class UpdateProduct(Mutation):
 
         return UpdateProduct(product=product)
 
+class DisableProduct(Mutation):
+    """Clase para desahabilitar productos"""
+    product = Field(ProductNode)
+
+    class Arguments:
+        input = ID(required=True)
+
+    def mutate(self, info, input):
+        input = from_global_id(input)[1]
+
+        product = Product.objects.get(pk=input)
+        product.active = False
+        product.save()
+        return DisableProduct(product=product)
 
 class DeleteProduct(Mutation):
     """Clase para eliminar productos"""
