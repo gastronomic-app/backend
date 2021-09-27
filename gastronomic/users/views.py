@@ -6,14 +6,20 @@ from django.utils.encoding import force_bytes
 from django.utils.encoding import force_text
 from django.shortcuts import redirect
 
+from django.views.decorators.csrf import csrf_exempt
+
 from profiles.models import UserProfile
 from .tokens import account_activation_token
 from django.contrib.sites.shortcuts import get_current_site
 
+url = 'https://delivery-food-frontend.herokuapp.com'
+#url = 'http://localhost:8080'
+@csrf_exempt
 def signup(self, request):
     user = self
     current_site = get_current_site(request)
-    site = 'localhost:8080'
+    site = url
+    print(site)
     email_body = {
         'user': user,
         'domain': site,
@@ -41,14 +47,12 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        return redirect('http://localhost:8080/login')
-    else:
-        return redirect('')
+        return redirect(url+'/login')
 
 def remember(self, request):
     user = self
     current_site = get_current_site(request)
-    site = 'localhost:8080'
+    site = url
     email_body = {
         'user': user,
         'domain': site,
@@ -77,8 +81,7 @@ def activateRe(request, uidb64, token):
     except(TypeError, ValueError, OverflowError, UserProfile.DoesNotExist):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
-        return redirect('http://localhost:8080/Password/Reset'+'/'+cad)
-    
+        return redirect(url+'/Password/Reset'+'/'+cad)
     else:
-        return redirect('http://localhost:8080/login')
+        return redirect(url+'/login')
 
