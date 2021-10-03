@@ -32,12 +32,7 @@ class CreateClient(Mutation):
         client.is_active=False
         client.save()
         contact.save()
-        if(client.password != 'deliver-food-2021'):
-            signup(client, info.context)
-        else:
-            client = Client.objects.get(email=client.email)
-            client.is_active=True
-            client.save()
+        signup(client, info.context)
 
         return CreateClient(client=client)
 
@@ -73,3 +68,16 @@ class RememberPasswordClient(Mutation):
         if (client.is_alternative==False):
             remember(client, info.context)
         return RememberPasswordClient(client=client)
+
+class ActivateClient(Mutation):
+    """Clase para crear clientes"""
+
+    client = Field(ClientNode)
+
+    class Arguments:
+        input = RememberPasswordInput(required=True)
+
+    def mutate(self, info, input: RememberPasswordInput):
+        client = Client.objects.get(email=input)
+        signup(client, info.context)
+        return ActivateClient(client=client)

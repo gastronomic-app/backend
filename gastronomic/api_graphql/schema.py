@@ -1,5 +1,7 @@
 from graphene import ObjectType
 from graphene.relay import Node
+import graphene
+import graphql
 
 from graphene_django.filter import DjangoFilterConnectionField
 
@@ -17,6 +19,7 @@ from .data.enterprise.types import EnterpriseNode
 from .data.management.types import ManagementNode
 from .data.review.types import ReviewNode
 from .data.image.types import ImageNode
+from .data.report.report import Reports, get_data_report, get_query_report
 from .data.enterprise.mutations import (
     CreateEnterprise,
     UpdateEnterprise,
@@ -25,7 +28,8 @@ from .data.enterprise.mutations import (
 from .data.client.mutations import (
     CreateClient,
     UpdateClient,
-    RememberPasswordClient
+    RememberPasswordClient,
+    ActivateClient
 )
 from .data.courier.mutations import (
     CreateCourier,
@@ -96,6 +100,11 @@ class Query(ObjectType):
     all_reviews = DjangoFilterConnectionField(ReviewNode)
     all_images = DjangoFilterConnectionField(ImageNode)
 
+    reports = graphene.Field(Reports, enterprise=graphene.String(), start_date=graphene.DateTime(), final_date=graphene.DateTime())
+    def resolve_reports(self, info: graphql.ResolveInfo,enterprise,start_date,final_date):
+        query_reports= get_query_report(enterprise,start_date,final_date)
+        object_reports= get_data_report(query_reports,start_date,final_date)
+        return object_reports
 class Mutation(ObjectType):
     """Endpoint para crear, actualizar y eliminar registros"""
 
@@ -106,7 +115,8 @@ class Mutation(ObjectType):
     create_client = CreateClient.Field()
     update_client = UpdateClient.Field()
     remember_client = RememberPasswordClient.Field()
-    
+    activate_client = ActivateClient.Field()
+
     create_courier = CreateCourier.Field()
     update_courier = UpdateCourier.Field()
 
