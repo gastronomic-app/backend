@@ -57,7 +57,10 @@ from .data.review.mutations import(
 from .data.product.mutations import (
     CreateProduct,
     UpdateProduct,
-    DeleteProduct
+    DeleteProduct,
+    DisableProduct,
+    AddAccompaniment,
+    DeleteAccompaniment
 )
 from .data.image.mutations import (
     CreateImage,
@@ -134,10 +137,12 @@ class Mutation(ObjectType):
     create_review = CreateReview.Field()
     update_review = UpdateReview.Field()
     
-    
     create_product = CreateProduct.Field()
     update_product = UpdateProduct.Field()
     delete_product = DeleteProduct.Field()
+    disable_product = DisableProduct.Field()
+    add_accompaniment = AddAccompaniment.Field()
+    delete_accompaniment = DeleteAccompaniment.Field()
 
     create_image = CreateImage.Field()
     update_image = UpdateImage.Field()

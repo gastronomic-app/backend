@@ -1,3 +1,4 @@
+from collections import _OrderedDictValuesView
 from graphene import Field
 from graphene import Mutation
 from graphene.types.scalars import ID
@@ -8,6 +9,8 @@ from products.models import Product
 from api_graphql.data.product.types import ProductNode
 from api_graphql.data.product.inputs import CreateProductInput
 from api_graphql.data.product.inputs import UpdateProductInput
+from api_graphql.data.product.inputs import AddAccompanimentInput
+from api_graphql.data.product.inputs import DeleteAccompanimentInput
 from api_graphql.utils import delete_attributes_none
 from api_graphql.utils import transform_global_ids
 
@@ -49,6 +52,20 @@ class UpdateProduct(Mutation):
 
         return UpdateProduct(product=product)
 
+class DisableProduct(Mutation):
+    """Clase para desahabilitar productos"""
+    product = Field(ProductNode)
+
+    class Arguments:
+        input = ID(required=True)
+
+    def mutate(self, info, input):
+        input = from_global_id(input)[1]
+
+        product = Product.objects.get(pk=input)
+        product.active = False
+        product.save()
+        return DisableProduct(product=product)
 
 class DeleteProduct(Mutation):
     """Clase para eliminar productos"""
@@ -68,3 +85,39 @@ class DeleteProduct(Mutation):
             raise GraphQLError('Product does not delete')
 
         return CreateProduct(product=product)
+
+class AddAccompaniment(Mutation):
+    """Clase para añadir acompañamiento"""
+    product = Field(ProductNode)
+
+    class Arguments:
+        input = AddAccompanimentInput(required=True)
+
+    def mutate(self, info, input):
+        # Elimina nulos y transforma el id
+        input = delete_attributes_none(**vars(input))
+        input = transform_global_ids(**input)
+        product = Product.objects.get(pk=input.get('from_product_id'))
+
+        Product.accompaniments.through.objects.create(
+                from_product_id=product.pk,
+                to_product_id=input.pop('to_product_id')
+            )
+        return AddAccompaniment(product=product)
+
+    
+class DeleteAccompaniment(Mutation):
+    """Clase para eliminar acompañamientos"""
+    product = Field(ProductNode)
+
+    class Arguments:
+        input = DeleteAccompanimentInput(required=True)
+
+    def mutate(self, info, input):
+        # Elimina nulos y transforma el id
+        input = delete_attributes_none(**vars(input))
+        input = transform_global_ids(**input)
+        product = Product.objects.get(pk=input.get('from_product_id'))
+        for accomp in Product.accompaniments.through.objects.filter(from_product_id=input.get('from_product_id'),to_product_id=input.get('to_product_id')):
+            accomp.delete()
+        return DeleteAccompaniment(product=product)

@@ -7,6 +7,7 @@ from django.db.models import (
     ImageField,
     ForeignKey,
     ManyToManyField,
+    BooleanField,
     CASCADE
 )
 
@@ -25,6 +26,7 @@ class Product(Model):
     ingredients = TextField(help_text='ingredientes')
     preparation = TextField(null=True, blank=True, help_text='preparación')
     estimated_time = PositiveSmallIntegerField(help_text='tiempo estimado')
+    active = BooleanField(default=True,help_text='Estado del producto')
 
     # Relaciones
     enterprise = ForeignKey(
