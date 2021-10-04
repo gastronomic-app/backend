@@ -8,7 +8,7 @@ from django.db.models import (
     CASCADE
 )
 from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
+from django.db.models.fields import TextField
 
 from products.models import Product
 from users.models import Client
@@ -24,6 +24,7 @@ class Order(Model):
     status = CharField(max_length=15, choices=STATUS_CHOICES, default=NEW, help_text='estado')
     estimated_time = PositiveSmallIntegerField(help_text='tiempo estimado')
     location = CharField(max_length=250, help_text='ubicación')
+    complaint = TextField(blank=True, null=True, help_text='queja')
 
     # Relaciones
     client = ForeignKey(
