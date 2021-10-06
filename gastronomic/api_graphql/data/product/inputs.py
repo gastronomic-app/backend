@@ -37,3 +37,21 @@ class UpdateProductInput(InputObjectType):
 
     # Relaciones
     enterprise_id=ID()
+
+class AddAccompanimentInput(InputObjectType):
+    """
+    Clase que encapsula los datos necesarios
+    para añadir recomendaciones
+    """
+    from_product_id = ID(required=True)
+    to_product_id = ID(required=True)
+
+class DeleteAccompanimentInput(InputObjectType):
+    """
+    Clase que encapsula los datos necesarios
+    para eliminar recomendaciones
+    """
+    from_product_id = ID(required=True)
+    to_product_id = ID(required=True)
+
+    

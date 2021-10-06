@@ -14,6 +14,7 @@ class CreateOrderInput(InputObjectType):
 
     estimated_time = Int(required=True)
     location = String(required=True)
+    complaint = String()
 
     # Relaciones
     client_id = ID(required=True)
@@ -30,6 +31,7 @@ class UpdateOrderInput(InputObjectType):
     status = String()
     estimated_time = Int()
     location = String()
+    complaint = String()
 
     # Relaciones
     client_id = ID()

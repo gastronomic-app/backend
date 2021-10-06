@@ -14,12 +14,13 @@ from django.contrib.sites.shortcuts import get_current_site
 
 url = 'https://delivery-food-frontend.herokuapp.com'
 #url = 'http://localhost:8080'
+
 @csrf_exempt
+
 def signup(self, request):
     user = self
     current_site = get_current_site(request)
     site = url
-    print(site)
     email_body = {
         'user': user,
         'domain': site,

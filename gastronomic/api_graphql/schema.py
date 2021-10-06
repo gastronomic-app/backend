@@ -50,6 +50,12 @@ from .data.order.mutations import(
     UpdateOrder,
     DeleteOrder
 )
+
+from .data.payment.mutations import(
+    CreatePayment,
+    UpdatePayment,
+    DeletePayment
+)
 from .data.review.mutations import(
     CreateReview,
     UpdateReview
@@ -57,7 +63,10 @@ from .data.review.mutations import(
 from .data.product.mutations import (
     CreateProduct,
     UpdateProduct,
-    DeleteProduct
+    DeleteProduct,
+    DisableProduct,
+    AddAccompaniment,
+    DeleteAccompaniment
 )
 from .data.image.mutations import (
     CreateImage,
@@ -136,14 +145,20 @@ class Mutation(ObjectType):
     create_order = CreateOrder.Field()
     update_order = UpdateOrder.Field()
     delete_order = DeleteOrder.Field()
+    
+    create_payment = CreatePayment.Field()
+    update_payment = UpdatePayment.Field()
+    delete_payment = DeletePayment.Field()
 
     create_review = CreateReview.Field()
     update_review = UpdateReview.Field()
     
-    
     create_product = CreateProduct.Field()
     update_product = UpdateProduct.Field()
     delete_product = DeleteProduct.Field()
+    disable_product = DisableProduct.Field()
+    add_accompaniment = AddAccompaniment.Field()
+    delete_accompaniment = DeleteAccompaniment.Field()
 
     create_image = CreateImage.Field()
     update_image = UpdateImage.Field()
