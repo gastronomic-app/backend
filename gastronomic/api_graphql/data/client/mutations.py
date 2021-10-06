@@ -49,9 +49,11 @@ class UpdateClient(Mutation):
         # Elimina nulos y transforma el id
         input = delete_attributes_none(**vars(input))
         input = transform_global_ids(**input)
-
+        
         Client.objects.filter(pk=input.get('id')).update(**input)
         client = Client.objects.get(pk=input.get('id'))
+        client.set_password(client.password)
+        client.save()
 
         return UpdateClient(client=client)
 
@@ -66,7 +68,10 @@ class RememberPasswordClient(Mutation):
     def mutate(self, info, input):
         client = Client.objects.get(email=input)
         if (client.is_alternative==False):
-            remember(client, info.context)
+            if (client.is_active):
+                remember(client, info.context)
+            else:
+                return "Usuario inactivo"
         return RememberPasswordClient(client=client)
 
 class ActivateClient(Mutation):

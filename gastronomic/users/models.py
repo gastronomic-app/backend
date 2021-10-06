@@ -34,6 +34,7 @@ class Client(UserProfile):
         """Función que guarda un usuario tipo cliente"""
 
         if not self.pk:
+            self.set_password(self.password)
             self.type = UserProfile.Types.CLIENT
 
         return super().save(*args, **kwargs)
@@ -73,8 +74,9 @@ class Manager(UserProfile):
         Función que guarda un usuario
         tipo administrador del establecimiento
         """
-
+        
         if not self.pk:
+            self.set_password(self.password)
             self.type = UserProfile.Types.MANAGER
 
         return super().save(*args, **kwargs)
@@ -110,6 +112,7 @@ class Courier(UserProfile):
         """
 
         if not self.pk:
+            self.set_password(self.password)
             self.type = UserProfile.Types.COURIER
 
         return super().save(*args, **kwargs)
