@@ -1,9 +1,11 @@
 from graphene import Field
 from graphene import Mutation
 from graphene.types.scalars import ID
+from profiles.models import UserProfile
 
 from users.models import Client, Contact
 from api_graphql.data.client.types import ClientNode
+from api_graphql.data.user.types import UserNode
 from api_graphql.data.client.inputs import CreateClientInput, RememberPasswordInput
 from api_graphql.data.client.inputs import UpdateClientInput
 from api_graphql.utils import delete_attributes_none
@@ -60,13 +62,13 @@ class UpdateClient(Mutation):
 class RememberPasswordClient(Mutation):
     """Clase para actualizar clientes"""
 
-    client = Field(ClientNode)
+    client = Field(UserNode)
 
     class Arguments:
         input = RememberPasswordInput(required=True)
 
     def mutate(self, info, input):
-        client = Client.objects.get(email=input)
+        client = UserProfile.objects.get(email=input)
         if (client.is_alternative==False):
             if (client.is_active):
                 remember(client, info.context)

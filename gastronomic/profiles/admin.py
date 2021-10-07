@@ -16,7 +16,8 @@ class UserProfileAdmin(UserAdmin):
     list_display = ('email', 'is_active','type','is_staff',)
     list_filter = ('email', 'is_staff', 'is_active',)
     fieldsets = (
-        (None, {'fields': ('email', 'password', 'type','is_staff', 'is_active','enterprise',)}),
+        (None, {'fields': ('email', 'password', 'type',)}),
+        ('Permissions', {'fields': ('is_staff', 'is_active','enterprise', 'is_alternative',)}),
     )
     add_fieldsets = (
         (None, {
