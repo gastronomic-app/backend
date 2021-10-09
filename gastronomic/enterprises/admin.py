@@ -11,6 +11,7 @@ class enterprise(admin.ModelAdmin):
     list_display=('name','location','business_hours','status','created')
     list_filter=('status','business_hours','location',)
     search_fields=['name','location']
+    exclude = ('business_hours',)
 @admin.register(Management)
 class management(admin.ModelAdmin):
     list_display=('date','status')

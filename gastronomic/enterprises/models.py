@@ -9,6 +9,8 @@ from django.db.models import (
     ManyToManyField,
     CASCADE
 )
+from users.models import Manager
+from django.db.models.fields.files import ImageField
 
 # Create your models here.
 
@@ -27,19 +29,26 @@ class Enterprise(Model):
         max_length=500,
         null=True,
         blank=True,
-        help_text='horario de atención'
+        help_text='horario de atención',
     )
     status = BooleanField(default=True, help_text='estado')
     created = DateTimeField(auto_now_add=True, help_text='creado')
 
-    # Relaciones
-    image = OneToOneField(
-        'products.Image',
+    
+    image = ImageField(
+        upload_to='upload/images/enterprises',
         null=True,
         blank=True,
-        on_delete=CASCADE,
-        help_text='imagen'
+        help_text='imagen',
     )
+    # Relaciones
+    # image = OneToOneField(
+    #     'products.Image',
+    #     null=True,
+    #     blank=True,
+    #      on_delete=CASCADE,
+    #      help_text='imagen'
+    #  )
     managers = ManyToManyField(
         'users.Manager',
         through='Management',
@@ -47,13 +56,16 @@ class Enterprise(Model):
         help_text='administradores de establecimiento'
     )
 
-    def __str__(self) -> str:
+    def _str_(self) -> str:
         """
         Función que representa al objeto
         cuando es recuperado
 
         """
         return self.name
+
+    # def _init_(self):
+    #     return self.name
 
 
 class Management(Model):
@@ -73,13 +85,13 @@ class Management(Model):
         help_text='establecimiento'
     )
     manager = ForeignKey(
-        'users.Manager',
+        Manager,
         related_name='managements',
         on_delete=CASCADE,
         help_text='administrador del establecimiento'
     )
 
-    def __str__(self) -> str:
+    def _str_(self) -> str:
         """
         Función que representa al objeto
         cuando es recuperado
