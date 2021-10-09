@@ -11,7 +11,7 @@ from django.core.exceptions import ValidationError
 from django.db.models.fields import TextField
 
 from products.models import Product
-from users.models import Client
+from users.models import Client, Courier
 from .choices import STATUS_CHOICES, NEW
 
 # Create your models here.
@@ -29,7 +29,7 @@ class Order(Model):
     # Relaciones
     client = ForeignKey(
         Client,
-        related_name='orders',
+        related_name='orders_clients',
         on_delete=CASCADE,
         help_text='cliente'
     )
@@ -39,6 +39,14 @@ class Order(Model):
         through='Detail',
         blank=True,
         help_text='productos'
+    )
+    courier = ForeignKey(
+        Courier,
+        blank=True,
+        null=True,
+        related_name='orders_couriers',
+        on_delete=CASCADE,
+        help_text='mensajero'
     )
 
     def __str__(self) -> str:
@@ -69,7 +77,7 @@ class Detail(Model):
         'Order',
         related_name='details',
         on_delete=CASCADE,
-        help_text='order de pedido'
+        help_text='orden de pedido'
     )
 
     def clean(self) -> None:
