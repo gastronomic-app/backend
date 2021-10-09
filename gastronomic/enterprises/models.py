@@ -56,7 +56,7 @@ class Enterprise(Model):
         help_text='administradores de establecimiento'
     )
 
-    def _str_(self) -> str:
+    def __str__(self) -> str:
         """
         Función que representa al objeto
         cuando es recuperado
@@ -91,7 +91,7 @@ class Management(Model):
         help_text='administrador del establecimiento'
     )
 
-    def _str_(self) -> str:
+    def __str__(self) -> str:
         """
         Función que representa al objeto
         cuando es recuperado

@@ -22,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "QOE4i4dMCj"
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -193,9 +193,9 @@ if os.getenv('ON_HEROKU'):
 MEDIA_URL = '/Gastronomic/'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'dcbzwrn30',
-    'API_KEY': '417795229289718',
-    'API_SECRET': 'nbABKj1Rgtbzz_BkQxWQ0SDrn_g',
+     'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET')
 }
 
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
