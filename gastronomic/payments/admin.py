@@ -7,6 +7,6 @@ from .models import Payment
 #admin.site.register(Payment)
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
-    list_display=('payment_type','payment_value','delivery')
-    list_filter=('payment_type','delivery',)
+    list_display=('payment_type','payment_value','order')
+    list_filter=('payment_type','order',)
     search_fields=('payment_type',)
