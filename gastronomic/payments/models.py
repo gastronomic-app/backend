@@ -6,7 +6,7 @@ from django.db.models import (
     CASCADE
 )
 
-from deliveries.models import Delivery
+from orders.models import Order
 from .choices import PAYMENT_TYPE_CHOICES
 
 # Create your models here.
@@ -19,11 +19,11 @@ class Payment(Model):
     payment_value = PositiveBigIntegerField(help_text='valor pago')
 
     # Relaciones
-    delivery = OneToOneField(
-        Delivery,
+    order = OneToOneField(
+        Order,
         related_name='payment',
         on_delete=CASCADE,
-        help_text='entrega'
+        help_text='orden pedido'
     )
 
     def __str__(self) -> str:
