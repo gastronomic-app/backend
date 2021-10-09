@@ -1,7 +1,7 @@
 from graphene.relay import Node
 from graphene_django import DjangoObjectType
 
-from deliveries.models import Courier
+from users.models import Courier
 from api_graphql.connections import TotalCountConnection
 
 # Create your objects types here.
