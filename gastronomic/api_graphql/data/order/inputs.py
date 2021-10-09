@@ -18,6 +18,7 @@ class CreateOrderInput(InputObjectType):
 
     # Relaciones
     client_id = ID(required=True)
+    courier_id = ID()
 
 
 class UpdateOrderInput(InputObjectType):
@@ -35,3 +36,4 @@ class UpdateOrderInput(InputObjectType):
 
     # Relaciones
     client_id = ID()
+    courier_id = ID()

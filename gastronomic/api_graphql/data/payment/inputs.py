@@ -13,10 +13,10 @@ class CreatePaymentInput(InputObjectType):
     """
     payment_type = String(required=True)
     payment_value = String(required=True)
-    
+
     # Relaciones
-    delivery_id = ID(required=True)
-    
+    order_id = ID(required=True)
+
 
 class UpdatePaymentInput(InputObjectType):
     """
@@ -26,3 +26,6 @@ class UpdatePaymentInput(InputObjectType):
     id = ID(required=True)
     payment_type = String()
     payment_value = String()
+
+    # Relaciones
+    order_id = ID()

@@ -14,7 +14,6 @@ from .data.payment.types import PaymentNode
 from .data.courier.types import CourierNode
 from .data.product.types import ProductNode
 from .data.manager.types import ManagerNode
-from .data.delivery.types import DeliveryNode
 from .data.enterprise.types import EnterpriseNode
 from .data.management.types import ManagementNode
 from .data.review.types import ReviewNode
@@ -79,7 +78,6 @@ from .data.image.mutations import (
 class Query(ObjectType):
     """Endpoint para consultar registros"""
 
-    delivery = Node.Field(DeliveryNode)
     courier = Node.Field(CourierNode)
     client = Node.Field(ClientNode)
     contact = Node.Field(ContactNode)
@@ -94,7 +92,6 @@ class Query(ObjectType):
     review = Node.Field(ReviewNode)
     image = Node.Field(ImageNode)
 
-    all_deliveries = DjangoFilterConnectionField(DeliveryNode)
     all_couriers = DjangoFilterConnectionField(CourierNode)
     all_clients = DjangoFilterConnectionField(ClientNode)
     all_contacts = DjangoFilterConnectionField(ContactNode)

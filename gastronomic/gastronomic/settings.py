@@ -46,17 +46,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'graphene_django',
     'corsheaders',
+    'cloudinary_storage',
+    'cloudinary',
 
-    'deliveries.apps.DeliveriesConfig',
     'enterprises.apps.EnterprisesConfig',
     'orders.apps.OrdersConfig',
     'payments.apps.PaymentsConfig',
     'products.apps.ProductsConfig',
     'reviews.apps.ReviewsConfig',
     'users.apps.UsersConfig',
-    'profiles.apps.ProfilesConfig',
-    'cloudinary_storage',
-    'cloudinary'
+    'profiles.apps.ProfilesConfig'
 ]
 
 MIDDLEWARE = [
