@@ -10,7 +10,7 @@ from .models import Order, Detail
 class orderAdmin(admin.ModelAdmin):
     list_display=('date','status','location','client')
     list_filter=('date','status',)
-    search_fields=('location','cliente__email')
+    search_fields=('location','client__email')
 
 @admin.register(Detail)
 class detailAdmin(admin.ModelAdmin):
