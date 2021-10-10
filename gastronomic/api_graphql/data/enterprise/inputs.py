@@ -2,7 +2,7 @@ from graphene import InputObjectType
 from graphene.types.scalars import ID
 from graphene.types.scalars import String
 from graphene.types.scalars import Boolean
-
+from graphene_file_upload.scalars import Upload
 # Create your inputs types here.
 
 
@@ -19,7 +19,7 @@ class CreateEnterpriseInput(InputObjectType):
     status = Boolean()
 
     # Relaciones
-    image_id = ID()
+    image = Upload()
 
 
 class UpdateEnterpriseInput(InputObjectType):
@@ -34,6 +34,5 @@ class UpdateEnterpriseInput(InputObjectType):
     location = String()
     business_hours = String()
     status = Boolean()
-
     # Relaciones
-    image_id = ID()
+    image = Upload()

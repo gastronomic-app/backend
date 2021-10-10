@@ -18,11 +18,16 @@ from .data.enterprise.types import EnterpriseNode
 from .data.management.types import ManagementNode
 from .data.review.types import ReviewNode
 from .data.image.types import ImageNode
+from .data.notification.types import NotificationNode
 from .data.report.report import Reports, get_data_report, get_query_report
 from .data.enterprise.mutations import (
     CreateEnterprise,
     UpdateEnterprise,
     DeleteEnterprise
+)
+from .data.management.mutations import (
+    CreateManagement,
+    UpdateManagement
 )
 from .data.client.mutations import (
     CreateClient,
@@ -71,6 +76,10 @@ from .data.image.mutations import (
     CreateImage,
     UpdateImage
 )
+from .data.notification.mutations import (
+    CreateNotification,
+    UpdateNotification
+)
 
 # Schema definition
 
@@ -91,6 +100,7 @@ class Query(ObjectType):
     payment = Node.Field(PaymentNode)
     review = Node.Field(ReviewNode)
     image = Node.Field(ImageNode)
+    notification = Node.Field(NotificationNode)
 
     all_couriers = DjangoFilterConnectionField(CourierNode)
     all_clients = DjangoFilterConnectionField(ClientNode)
@@ -105,6 +115,7 @@ class Query(ObjectType):
     all_payments = DjangoFilterConnectionField(PaymentNode)
     all_reviews = DjangoFilterConnectionField(ReviewNode)
     all_images = DjangoFilterConnectionField(ImageNode)
+    all_notifications = DjangoFilterConnectionField(NotificationNode)
 
     reports = graphene.Field(Reports, enterprise=graphene.String(), start_date=graphene.DateTime(), final_date=graphene.DateTime())
     def resolve_reports(self, info: graphql.ResolveInfo,enterprise,start_date,final_date):
@@ -123,6 +134,9 @@ class Mutation(ObjectType):
     create_enterprise = CreateEnterprise.Field()
     update_enterprise = UpdateEnterprise.Field()
     delete_enterprise = DeleteEnterprise.Field()
+
+    create_management = CreateManagement.Field()
+    update_management = UpdateManagement.Field()
 
     create_client = CreateClient.Field()
     update_client = UpdateClient.Field()
@@ -159,3 +173,6 @@ class Mutation(ObjectType):
 
     create_image = CreateImage.Field()
     update_image = UpdateImage.Field()
+
+    create_notification = CreateNotification.Field()
+    update_notification = UpdateNotification.Field()
