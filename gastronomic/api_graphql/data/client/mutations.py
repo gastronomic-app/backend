@@ -42,7 +42,7 @@ class CreateClient(Mutation):
 class UpdateClient(Mutation):
     """Clase para actualizar clientes"""
 
-    client = Field(ClientNode)
+    client = Field(UserNode)
 
     class Arguments:
         input = UpdateClientInput(required=True)
@@ -52,8 +52,8 @@ class UpdateClient(Mutation):
         input = delete_attributes_none(**vars(input))
         input = transform_global_ids(**input)
         
-        Client.objects.filter(pk=input.get('id')).update(**input)
-        client = Client.objects.get(pk=input.get('id'))
+        UserProfile.objects.filter(pk=input.get('id')).update(**input)
+        client = UserProfile.objects.get(pk=input.get('id'))
         client.set_password(client.password)
         client.save()
 
