@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'reviews.apps.ReviewsConfig',
     'users.apps.UsersConfig',
-    'profiles.apps.ProfilesConfig'
+    'profiles.apps.ProfilesConfig',
+    'notifications.apps.NotificationsConfig'
 ]
 
 MIDDLEWARE = [
