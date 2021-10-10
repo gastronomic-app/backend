@@ -27,14 +27,21 @@ class CreateClient(Mutation):
         client = Client(
             email=input.pop('email'),
             password=input.pop('password'),
-            is_alternative = input.pop('is_alternative')
+            is_alternative = input.pop('is_alternative'),
+            type = input.pop('type'),
+            enterprise_id =input.pop('enterprise_id')
         )
+        client.set_password(client.password)
         input['user'] = client
         contact = Contact(**input)
-        client.is_active=False
         client.save()
         contact.save()
-        signup(client, info.context)
+        if(client.type=="CLIENT"):
+            client.is_active=False
+            client.is_available=False
+            client.save()
+            signup(client, info.context)
+        
 
         return CreateClient(client=client)
 
