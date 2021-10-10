@@ -11,6 +11,7 @@ from api_graphql.data.client.inputs import UpdateClientInput
 from api_graphql.utils import delete_attributes_none
 from api_graphql.utils import transform_global_ids
 from users.views import remember,signup
+from graphql_relay.node.node import from_global_id
 # Create your mutations here
 
 
@@ -24,13 +25,18 @@ class CreateClient(Mutation):
 
     def mutate(self, info, input: CreateClientInput):
         input = vars(input)
-        input = transform_global_ids(**input)
+        enterprise_id =input.pop('enterprise_id')
+        if (enterprise_id != "Null"):
+            enterprise_id = from_global_id(enterprise_id)[1]
+        else:
+            enterprise_id =None    
+        
         client = UserProfile(
             email=input.pop('email'),
             password=input.pop('password'),
             is_alternative = input.pop('is_alternative'),
             type = input.pop('type'),
-            enterprise_id =input.pop('enterprise_id')
+            enterprise_id = enterprise_id
         )
         client.set_password(client.password)
         input['user'] = client
@@ -39,6 +45,7 @@ class CreateClient(Mutation):
         contact.save()
         if(client.type=="CLIENT"):
             client.is_active=False
+            client.enterprise= None
             client.is_available=False
             client.save()
             signup(client, info.context)
