@@ -2,7 +2,7 @@ from graphene import ObjectType
 from graphene.relay import Node
 import graphene
 import graphql
-
+import graphql_jwt
 from graphene_django.filter import DjangoFilterConnectionField
 
 from .data.user.types import UserNode
@@ -122,8 +122,14 @@ class Query(ObjectType):
         query_reports= get_query_report(enterprise,start_date,final_date)
         object_reports= get_data_report(query_reports,start_date,final_date)
         return object_reports
+        
 class Mutation(ObjectType):
     """Endpoint para crear, actualizar y eliminar registros"""
+    
+    token_auth = graphql_jwt.ObtainJSONWebToken.Field()
+    verify_token = graphql_jwt.Verify.Field()
+    refresh_token = graphql_jwt.Refresh.Field()
+    revoke_token = graphql_jwt.Revoke.Field()
 
     create_enterprise = CreateEnterprise.Field()
     update_enterprise = UpdateEnterprise.Field()

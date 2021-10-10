@@ -14,12 +14,16 @@ class CreateClientInput(InputObjectType):
 
     email = String(required=True)
     password = String(required=True)
+    type = String()
     is_alternative = Boolean(required=True)
     names = String(required=True)
     lastnames = String(required=True)
     location = String(required=True)
     telephone = String(required=True)
     license_plate = String()
+
+    #relaciones
+    enterprise_id = ID()
 
 
 class UpdateClientInput(InputObjectType):

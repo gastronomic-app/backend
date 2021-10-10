@@ -154,8 +154,15 @@ AUTH_USER_MODEL = 'profiles.UserProfile'
 # Graphene definition
 
 GRAPHENE = {
-    'SCHEMA': 'gastronomic.schema.schema'
+    'SCHEMA': 'gastronomic.schema.schema',
+    "MIDDLEWARE": [
+        "graphql_jwt.middleware.JSONWebTokenMiddleware",
+    ],
 }
+AUTHENTICATION_BACKENDS = [
+    "graphql_jwt.backends.JSONWebTokenBackend",
+    "django.contrib.auth.backends.AllowAllUsersModelBackend",
+]
 
 
 CORS_ORIGIN_WHITELIST = [

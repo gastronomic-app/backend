@@ -1,9 +1,11 @@
 from graphene import Field
 from graphene import Mutation
 from graphene.types.scalars import ID
+from profiles.models import UserProfile
 
 from users.models import Client, Contact
 from api_graphql.data.client.types import ClientNode
+from api_graphql.data.user.types import UserNode
 from api_graphql.data.client.inputs import CreateClientInput, RememberPasswordInput
 from api_graphql.data.client.inputs import UpdateClientInput
 from api_graphql.utils import delete_attributes_none
@@ -25,14 +27,21 @@ class CreateClient(Mutation):
         client = Client(
             email=input.pop('email'),
             password=input.pop('password'),
-            is_alternative = input.pop('is_alternative')
+            is_alternative = input.pop('is_alternative'),
+            type = input.pop('type'),
+            enterprise_id =input.pop('enterprise_id')
         )
+        client.set_password(client.password)
         input['user'] = client
         contact = Contact(**input)
-        client.is_active=False
         client.save()
         contact.save()
-        signup(client, info.context)
+        if(client.type=="CLIENT"):
+            client.is_active=False
+            client.is_available=False
+            client.save()
+            signup(client, info.context)
+        
 
         return CreateClient(client=client)
 
@@ -40,7 +49,7 @@ class CreateClient(Mutation):
 class UpdateClient(Mutation):
     """Clase para actualizar clientes"""
 
-    client = Field(ClientNode)
+    client = Field(UserNode)
 
     class Arguments:
         input = UpdateClientInput(required=True)
@@ -49,24 +58,29 @@ class UpdateClient(Mutation):
         # Elimina nulos y transforma el id
         input = delete_attributes_none(**vars(input))
         input = transform_global_ids(**input)
-
-        Client.objects.filter(pk=input.get('id')).update(**input)
-        client = Client.objects.get(pk=input.get('id'))
+        
+        UserProfile.objects.filter(pk=input.get('id')).update(**input)
+        client = UserProfile.objects.get(pk=input.get('id'))
+        client.set_password(client.password)
+        client.save()
 
         return UpdateClient(client=client)
 
 class RememberPasswordClient(Mutation):
     """Clase para actualizar clientes"""
 
-    client = Field(ClientNode)
+    client = Field(UserNode)
 
     class Arguments:
         input = RememberPasswordInput(required=True)
 
     def mutate(self, info, input):
-        client = Client.objects.get(email=input)
+        client = UserProfile.objects.get(email=input)
         if (client.is_alternative==False):
-            remember(client, info.context)
+            if (client.is_active):
+                remember(client, info.context)
+            else:
+                return "Usuario inactivo"
         return RememberPasswordClient(client=client)
 
 class ActivateClient(Mutation):
