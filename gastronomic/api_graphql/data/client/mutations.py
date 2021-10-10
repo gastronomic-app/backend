@@ -24,6 +24,7 @@ class CreateClient(Mutation):
 
     def mutate(self, info, input: CreateClientInput):
         input = vars(input)
+        input = transform_global_ids(**input)
         client = UserProfile(
             email=input.pop('email'),
             password=input.pop('password'),

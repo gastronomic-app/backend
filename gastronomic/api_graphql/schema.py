@@ -117,7 +117,7 @@ class Query(ObjectType):
     all_images = DjangoFilterConnectionField(ImageNode)
     all_notifications = DjangoFilterConnectionField(NotificationNode)
 
-    reports = graphene.Field(Reports, enterprise=graphene.String(), start_date=graphene.DateTime(), final_date=graphene.DateTime())
+    reports = graphene.Field(Reports, enterprise=graphene.ID(), start_date=graphene.DateTime(), final_date=graphene.DateTime())
     def resolve_reports(self, info: graphql.ResolveInfo,enterprise,start_date,final_date):
         query_reports= get_query_report(enterprise,start_date,final_date)
         object_reports= get_data_report(query_reports,start_date,final_date)

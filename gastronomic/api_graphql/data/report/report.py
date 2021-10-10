@@ -7,13 +7,14 @@ from datetime import datetime
 from datetime import timedelta
 from payments.models import Payment
 from enterprises.models import Enterprise
+from graphql_relay.node.node import from_global_id
 
 class Report(graphene.ObjectType):   
     report_date = graphene.String()
     payment_value = graphene.Int()
 
 class Reports(graphene.ObjectType):
-    enterprise= graphene.String()       
+    enterprise= graphene.ID()       
     start_date = graphene.DateTime()
     final_date = graphene.DateTime()
     report_list = graphene.List(Report)
@@ -21,7 +22,7 @@ class Reports(graphene.ObjectType):
 
 
 def get_query_report(enterprise,start_date,final_date):
-
+    enterprise = from_global_id(enterprise)[1]
     enterprise=Enterprise.objects.get(pk=enterprise)
     business_hours = json.loads(enterprise.business_hours)
     locale.setlocale(locale.LC_TIME, '')
