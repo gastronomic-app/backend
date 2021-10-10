@@ -17,14 +17,14 @@ from users.views import remember,signup
 class CreateClient(Mutation):
     """Clase para crear clientes"""
 
-    client = Field(ClientNode)
+    client = Field(UserNode)
 
     class Arguments:
         input = CreateClientInput(required=True)
 
     def mutate(self, info, input: CreateClientInput):
         input = vars(input)
-        client = Client(
+        client = UserProfile(
             email=input.pop('email'),
             password=input.pop('password'),
             is_alternative = input.pop('is_alternative'),
