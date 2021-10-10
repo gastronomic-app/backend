@@ -24,6 +24,10 @@ from .data.enterprise.mutations import (
     UpdateEnterprise,
     DeleteEnterprise
 )
+from .data.management.mutations import (
+    CreateManagement,
+    UpdateManagement
+ )
 from .data.client.mutations import (
     CreateClient,
     UpdateClient,
@@ -117,6 +121,9 @@ class Mutation(ObjectType):
     create_enterprise = CreateEnterprise.Field()
     update_enterprise = UpdateEnterprise.Field()
     delete_enterprise = DeleteEnterprise.Field()
+
+    create_management = CreateManagement.Field()
+    update_management = UpdateManagement.Field()
 
     create_client = CreateClient.Field()
     update_client = UpdateClient.Field()

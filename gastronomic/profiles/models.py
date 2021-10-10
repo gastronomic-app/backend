@@ -72,12 +72,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         default=True,
         help_text='disponibilidad del mensajero'
     )
-
-    objects = UserProfileManager()
-
-    USERNAME_FIELD = 'email'
-
-    # Relaciones
+ # Relaciones
     enterprise = ForeignKey(
         'enterprises.Enterprise',
         related_name='couriers',
@@ -86,6 +81,9 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         blank=True,
         help_text='establecimiento'
     )
+    objects = UserProfileManager()
+
+    USERNAME_FIELD = 'email'
 
     def __str__(self) -> str:
         """

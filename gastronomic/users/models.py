@@ -62,7 +62,7 @@ class Manager(UserProfile):
     Clase que representa un
     Usuario Administrador del Establecimiento
     """
-
+    
     class Meta:
         proxy = True
 
