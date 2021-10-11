@@ -23,7 +23,7 @@ class Reports(graphene.ObjectType):
 
 def get_query_report(enterprise,start_date,final_date):
     enterprise = from_global_id(enterprise)[1]
-    query_reports=Payment.objects.filter(order__date__range=[start_date,final_date],order__details__product__enterprise=enterprise,order__status="Entregado").values('order__details__product__enterprise__name' ,'order__date','payment_value').distinct()
+    query_reports=Payment.objects.filter(order__date__range=[start_date,final_date],order__details__product__enterprise=enterprise,order__status="ENTREGADO").values('order__details__product__enterprise__name' ,'order__date','payment_value').distinct()
     return query_reports
 def get_data_report(query_reports,start_date,final_date):
     
