@@ -23,16 +23,6 @@ class Reports(graphene.ObjectType):
 
 def get_query_report(enterprise,start_date,final_date):
     enterprise = from_global_id(enterprise)[1]
-    enterprise=Enterprise.objects.get(pk=enterprise)
-    business_hours = json.loads(enterprise.business_hours)
-    locale.setlocale(locale.LC_TIME, '')
-    
-    current_day=unidecode(datetime.today().strftime('%A'))
-    #fecha de cierre del establecimiento obtenida de la bd
-    close_date=(business_hours[current_day])['horaF']
-    hour_final = "{:d}:{:02d}".format(final_date.hour, final_date.minute)
-    if(hour_final>close_date):
-        final_date=final_date-timedelta(days=1)
     query_reports=Payment.objects.filter(order__date__range=[start_date,final_date],order__details__product__enterprise=enterprise,order__status="1").values('order__details__product__enterprise__name' ,'order__date','payment_value').distinct()
     return query_reports
 def get_data_report(query_reports,start_date,final_date):
