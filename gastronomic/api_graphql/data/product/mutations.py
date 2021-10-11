@@ -52,7 +52,7 @@ class UpdateProduct(Mutation):
 
         return UpdateProduct(product=product)
 
-class DisableProduct(Mutation):
+class ChangeState(Mutation):
     """Clase para desahabilitar productos"""
     product = Field(ProductNode)
 
@@ -63,9 +63,9 @@ class DisableProduct(Mutation):
         input = from_global_id(input)[1]
 
         product = Product.objects.get(pk=input)
-        product.active = False
+        product.active = product.active != True
         product.save()
-        return DisableProduct(product=product)
+        return ChangeState(product=product)
 
 class DeleteProduct(Mutation):
     """Clase para eliminar productos"""
