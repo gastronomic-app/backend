@@ -63,14 +63,16 @@ class UpdateClient(Mutation):
         input = UpdateClientInput(required=True)
 
     def mutate(self, info, input):
+        
         # Elimina nulos y transforma el id
         input = delete_attributes_none(**vars(input))
         input = transform_global_ids(**input)
-        
         UserProfile.objects.filter(pk=input.get('id')).update(**input)
         client = UserProfile.objects.get(pk=input.get('id'))
-        client.set_password(client.password)
         client.save()
+        if client.is_active ==True:
+            client.set_password(client.password)
+            client.save()
 
         return UpdateClient(client=client)
 
