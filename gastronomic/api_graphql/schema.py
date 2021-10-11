@@ -68,7 +68,7 @@ from .data.product.mutations import (
     CreateProduct,
     UpdateProduct,
     DeleteProduct,
-    DisableProduct,
+    ChangeState,
     AddAccompaniment,
     DeleteAccompaniment
 )
@@ -167,7 +167,7 @@ class Mutation(ObjectType):
     create_product = CreateProduct.Field()
     update_product = UpdateProduct.Field()
     delete_product = DeleteProduct.Field()
-    disable_product = DisableProduct.Field()
+    change_state = ChangeState.Field()
     add_accompaniment = AddAccompaniment.Field()
     delete_accompaniment = DeleteAccompaniment.Field()
 
