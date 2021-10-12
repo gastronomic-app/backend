@@ -1,10 +1,11 @@
 from django.db.models import (
-    Model,
+    CASCADE,
+    BooleanField,
     CharField,
-    TextField,
     DateTimeField,
     ForeignKey,
-    CASCADE,
+    Model,
+    TextField
 )
 
 from profiles.models import UserProfile
@@ -17,6 +18,7 @@ class Notification(Model):
 
     title = CharField(max_length=45, help_text='titulo')
     message = TextField(help_text='mensaje')
+    read = BooleanField(default=False, help_text='notificación leida')
     created = DateTimeField(auto_now_add=True, help_text='fecha creación')
 
     # Relaciones
