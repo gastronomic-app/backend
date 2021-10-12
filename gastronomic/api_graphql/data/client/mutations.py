@@ -50,7 +50,6 @@ class CreateClient(Mutation):
             client.save()
             signup(client, info.context)
         
-
         return CreateClient(client=client)
 
 
