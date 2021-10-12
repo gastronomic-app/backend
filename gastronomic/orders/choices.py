@@ -4,9 +4,11 @@
 NEW = 'nuevo'
 DISPATCHED = 'despachado'
 DELIVERED = 'entregado'
+CANCELED = 'cancelado'
 
 STATUS_CHOICES = (
     (NEW, 'Nuevo'),
     (DISPATCHED, 'Despachado'),
-    (DELIVERED, 'Entregado')
+    (DELIVERED, 'Entregado'),
+    (CANCELED, 'Cancelado')
 )

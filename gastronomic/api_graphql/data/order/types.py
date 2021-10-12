@@ -19,7 +19,7 @@ class OrderNode(DjangoObjectType):
         filter_fields = {
             'date': ['exact'],
             'status': ['exact'],
-            'estimated_time': ['exact'],
+            'estimated_time': ['exact', 'icontains', 'istartswith'],
             'location': ['exact', 'icontains', 'istartswith']
         }
         interfaces = (Node, )
