@@ -21,7 +21,6 @@ class EnterpriseNode(DjangoObjectType):
             'historical_review': ['exact', 'icontains', 'istartswith'],
             'location': ['exact', 'icontains', 'istartswith'],
             'business_hours': ['exact', 'icontains', 'istartswith'],
-            'city': ['exact', 'icontains', 'istartswith'],
             'status': ['exact'],
             'created': ['exact', 'icontains', 'istartswith']
         }
