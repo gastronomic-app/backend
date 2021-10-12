@@ -72,8 +72,16 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         default=True,
         help_text='disponibilidad del mensajero'
     )
- # Relaciones
-  
+    # Relaciones
+    enterprise = ForeignKey(
+        'enterprises.Enterprise',
+        related_name='couriers',
+        on_delete=CASCADE,
+        null=True,
+        blank=True,
+        help_text='establecimiento'
+    )
+
     objects = UserProfileManager()
 
     USERNAME_FIELD = 'email'

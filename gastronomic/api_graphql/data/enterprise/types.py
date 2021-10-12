@@ -19,6 +19,7 @@ class EnterpriseNode(DjangoObjectType):
         filter_fields = {
             'name': ['exact', 'icontains', 'istartswith'],
             'historical_review': ['exact', 'icontains', 'istartswith'],
+            'city': ['exact', 'icontains', 'istartswith'],
             'location': ['exact', 'icontains', 'istartswith'],
             'business_hours': ['exact', 'icontains', 'istartswith'],
             'status': ['exact'],

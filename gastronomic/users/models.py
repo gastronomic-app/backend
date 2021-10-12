@@ -125,6 +125,7 @@ class Contact(models.Model):
 
     names = models.CharField(max_length=45, help_text='nombres')
     lastnames = models.CharField(max_length=45, help_text='apellidos')
+    city = models.CharField(max_length=75, help_text='ciudad')
     location = models.CharField(max_length=250, help_text='ubicación')
     telephone = models.CharField(max_length=15, help_text='telefono')
     license_plate = models.CharField(
