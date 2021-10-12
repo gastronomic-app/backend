@@ -22,7 +22,7 @@ class Order(Model):
 
     date = DateTimeField(auto_now_add=True, help_text='fecha')
     status = CharField(max_length=15, choices=STATUS_CHOICES, default=NEW, help_text='estado')
-    estimated_time = PositiveSmallIntegerField(help_text='tiempo estimado')
+    estimated_time = CharField(max_length=45, help_text='tiempo estimado')
     location = CharField(max_length=250, help_text='ubicación')
     complaint = TextField(blank=True, null=True, help_text='queja')
 
