@@ -15,6 +15,7 @@ class CreateEnterpriseInput(InputObjectType):
     name = String(required=True)
     historical_review = String()
     location = String(required=True)
+    city = String(required=True)
     business_hours = String()
     status = Boolean()
 
@@ -32,6 +33,7 @@ class UpdateEnterpriseInput(InputObjectType):
     name = String()
     historical_review = String()
     location = String()
+    city = String(required=True)
     business_hours = String()
     status = Boolean()
     # Relaciones
