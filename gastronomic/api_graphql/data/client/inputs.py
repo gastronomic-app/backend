@@ -19,7 +19,6 @@ class CreateClientInput(InputObjectType):
     names = String(required=True)
     lastnames = String(required=True)
     location = String(required=True)
-    city = String(required=True)
     telephone = String(required=True)
     license_plate = String()
 

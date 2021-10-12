@@ -1,5 +1,12 @@
 import graphene
+from unidecode import unidecode
+import datetime
+import locale
+import json
+from datetime import datetime
+from datetime import timedelta
 from payments.models import Payment
+from enterprises.models import Enterprise
 from graphql_relay.node.node import from_global_id
 
 class Report(graphene.ObjectType):   

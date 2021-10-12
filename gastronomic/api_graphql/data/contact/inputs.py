@@ -10,11 +10,10 @@ class CreateContactInput(InputObjectType):
     Clase que encapsula los datos necesarios
     para la creación de contacto
     """
-    
+
     names = String(required=True)
     lastnames = String(required=True)
     location = String(required=True)
-    city = String(required=True)
     telephone = String(required=True)
     license_plate = String()
 
@@ -32,7 +31,6 @@ class UpdateContactInput(InputObjectType):
     names = String()
     lastnames = String()
     location = String()
-    city = String(required=True)
     telephone = String()
     license_plate = String()
 

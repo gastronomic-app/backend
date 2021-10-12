@@ -21,7 +21,6 @@ class ContactNode(DjangoObjectType):
             'lastnames': ['exact', 'icontains', 'istartswith'],
             'location': ['exact', 'icontains', 'istartswith'],
             'telephone': ['exact', 'icontains', 'istartswith'],
-            'city': ['exact', 'icontains', 'istartswith'],
             'license_plate': ['exact', 'icontains', 'istartswith'],
             'created': ['exact'],
             'updated': ['exact']
