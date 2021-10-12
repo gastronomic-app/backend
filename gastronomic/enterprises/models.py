@@ -25,6 +25,7 @@ class Enterprise(Model):
         help_text='reseña historica'
     )
     location = CharField(max_length=250, help_text='ubicación')
+    city = CharField(max_length=75,default="", help_text='ciudad')
     business_hours = CharField(
         max_length=500,
         null=True,
