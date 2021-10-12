@@ -12,7 +12,7 @@ class CreateOrderInput(InputObjectType):
     necesarios para la creación de Pedido
     """
 
-    estimated_time = Int(required=True)
+    estimated_time = String(required=True)
     location = String(required=True)
     complaint = String()
 
@@ -30,7 +30,7 @@ class UpdateOrderInput(InputObjectType):
     id = ID(required=True)
 
     status = String()
-    estimated_time = Int()
+    estimated_time = String()
     location = String()
     complaint = String()
 
