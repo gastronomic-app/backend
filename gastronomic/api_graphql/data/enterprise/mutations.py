@@ -50,6 +50,7 @@ class UpdateEnterprise(Mutation):
         enterprise.save()
         enterprise.image.name=enterprise.image.url
         enterprise.save()
+        Enterprise.objects.filter(pk=input.get("id")).update(**input)
         return UpdateEnterprise(enterprise=enterprise)
 
 
