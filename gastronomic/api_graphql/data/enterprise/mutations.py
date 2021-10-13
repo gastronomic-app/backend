@@ -1,6 +1,10 @@
 from graphene import Field
 from graphene import Mutation
-from graphene.types.scalars import ID
+from graphene.types.scalars import (
+    ID,
+    String,
+    Boolean
+)
 from graphql import GraphQLError
 from graphql_relay.node.node import from_global_id
 
@@ -8,6 +12,7 @@ from enterprises.models import Enterprise
 from api_graphql.data.enterprise.types import EnterpriseNode
 from api_graphql.data.enterprise.inputs import CreateEnterpriseInput
 from api_graphql.data.enterprise.inputs import UpdateEnterpriseInput
+from graphene_file_upload.scalars import Upload
 from api_graphql.utils import delete_attributes_none
 from api_graphql.utils import transform_global_ids
 
@@ -22,7 +27,7 @@ class CreateEnterprise(Mutation):
     class Arguments:
         input = CreateEnterpriseInput(required=True)
 
-    def mutate(self, info, input):
+    def mutate(self, info, input, **kwargs):
         input = delete_attributes_none(**vars(input))
         enterprise = Enterprise.objects.create(**input)
 
@@ -40,10 +45,11 @@ class UpdateEnterprise(Mutation):
     def mutate(self, info, input):
         input = delete_attributes_none(**vars(input))
         input = transform_global_ids(**input)
-
-        Enterprise.objects.filter(pk=input.get('id')).update(**input)
         enterprise = Enterprise.objects.get(pk=input.get('id'))
-
+        enterprise.image = input.get('image')
+        enterprise.save()
+        enterprise.image.name=enterprise.image.url
+        enterprise.save()
         return UpdateEnterprise(enterprise=enterprise)
 
 
