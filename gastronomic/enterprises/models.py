@@ -74,7 +74,9 @@ class Management(Model):
     Clase que representa la Gestión entre
     Establecimientos y Administradores de Establecimientos
     """
-
+    class Meta:
+        unique_together = (('manager', 'enterprise'),)
+    
     date = DateTimeField(auto_now_add=True, help_text='fecha')
     status = BooleanField(default=True, help_text='estado')
 
