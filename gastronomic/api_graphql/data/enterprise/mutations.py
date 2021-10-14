@@ -13,7 +13,7 @@ from enterprises.models import Enterprise
 from api_graphql.data.enterprise.types import EnterpriseNode
 from api_graphql.data.enterprise.inputs import CreateEnterpriseInput
 from api_graphql.data.enterprise.inputs import UpdateEnterpriseInput
-from graphene_file_upload.scalars import Upload
+
 from api_graphql.utils import delete_attributes_none
 from api_graphql.utils import transform_global_ids
 
@@ -28,7 +28,7 @@ class CreateEnterprise(Mutation):
     class Arguments:
         input = CreateEnterpriseInput(required=True)
 
-    def mutate(self, info, input, **kwargs):
+    def mutate(self, info, input):
         input = delete_attributes_none(**vars(input))
         enterprise = Enterprise.objects.create(**input)
 
