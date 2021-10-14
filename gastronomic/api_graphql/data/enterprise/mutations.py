@@ -47,6 +47,7 @@ class UpdateEnterprise(Mutation):
         input = delete_attributes_none(**vars(input))
         input = transform_global_ids(**input)
         enterprise = Enterprise.objects.get(pk=input.get('id'))
+        print(input.image.name)
         Enterprise.objects.filter(pk=input.get("id")).update(**input)
         return UpdateEnterprise(enterprise=enterprise)
 
